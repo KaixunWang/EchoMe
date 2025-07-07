@@ -10,26 +10,34 @@ public class PlayerBehaviour : MonoBehaviour
     private float jumpForce = 10;
     private Animator animator;
     private float moveSpeed = 6;
-    
+
     private float moveInput = 0f;
     private bool isNearBeacon = false;
-    private Vector3 nearBeaconPosition;
-
     public bool getState()
     {
         return animator.GetBool("IsShadow");
     }
+    public Vector3 nearBeaconPosition;
+    private BeaconBehaviour beaconBehaviour;
     void Start()
     {
+        QualitySettings.vSyncCount = 0;           // 关闭 VSync
+        Application.targetFrameRate = 120;         // 手动锁帧
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-
+    void SwitchShadow()
+    {
+        Debug.Log("Switching shadow");
+        animator.SetBool("IsShadow", true);
+        animator.SetBool("IsWalking", false);
+        beaconBehaviour.SwitchShadow(nearBeaconPosition);
+    }
     void FixedUpdate()
     {
         // 检查是否处于影子状态
         bool isShadow = animator.GetBool("IsShadow");
-        
+
         if (!isShadow)
         {
             // 只有在非影子状态下才应用移动速度
@@ -46,7 +54,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
-        
+
         if (!isShadow)
         {
             // 只有在非影子状态下才允许移动
@@ -67,7 +75,7 @@ public class PlayerBehaviour : MonoBehaviour
                 animator.SetBool("IsWalking", false);
                 moveInput = 0f;
             }
-            
+
             // 只有在非影子状态下才允许跳跃
             if (Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
@@ -81,7 +89,7 @@ public class PlayerBehaviour : MonoBehaviour
             animator.SetBool("IsWalking", false);
             moveInput = 0f;
         }
-        
+
         // 切换影子的按键在任何状态下都可以使用
         if (Input.GetKeyDown(KeyCode.E) && isNearBeacon && !isShadow)
         {
@@ -90,81 +98,37 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void MoveLeft()
+    public void MoveLeft()
     {
         transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
     }
 
-    void MoveRight()
+    public void MoveRight()
     {
         transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
     }
 
-    void Jump()
+    public void Jump()
     {
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    void SwitchShadow()
-    {
-        Debug.Log("Switching shadow");
-        animator.SetBool("IsShadow", true);
-        animator.SetBool("IsWalking", false);
 
-        
-        // 尝试加载 Shadow prefab
-        GameObject shadowPrefab = Resources.Load<GameObject>("Prefab/Shadow");
-        if (shadowPrefab == null)
-        {
-            Debug.LogError("Failed to load Shadow prefab from Resources/Prefab/Shadow");
-            return;
-        }
-        
-        // 实例化 Shadow
-        GameObject shadow = Instantiate(shadowPrefab, nearBeaconPosition, Quaternion.identity);
-        if (shadow == null)
-        {
-            Debug.LogError("Failed to instantiate Shadow prefab");
-            return;
-        }
-        
-        Debug.Log("Shadow instantiated successfully at: " + shadow.transform.position);
-
-        // 获取主摄像机并设置目标
-        GameObject mainCamera = GameObject.Find("Main Camera");
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main Camera not found in scene!");
-            return;
-        }
-        
-        CameraFollow cameraFollow = mainCamera.GetComponent<CameraFollow>();
-        if (cameraFollow == null)
-        {
-            Debug.LogError("CameraFollow component not found on Main Camera!");
-            return;
-        }
-
-        mainCamera.transform.position = new Vector3(shadow.transform.position.x, shadow.transform.position.y, -10);
-        cameraFollow.target = shadow.transform;
-        
-        Debug.Log("Camera target set to shadow");
-    }
 
     // 当shadow销毁时调用，让player回到正常状态
     public void ReturnToPlayer()
     {
         Debug.Log("Returning to player");
-        
+
         // 重置动画状态
         animator.SetBool("IsShadow", false);
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsJumping", false);
-        
+
         // 重置移动输入
         moveInput = 0f;
-        
+
         // 如果是player获取主摄像机并设置回player
         if (gameObject.name == "Player")
         {
@@ -224,8 +188,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.name == "Beacon")
         {
+            
+            Debug.Log("Beacon Updated");
             isNearBeacon = true;
             nearBeaconPosition = other.gameObject.transform.position;
+            beaconBehaviour = other.gameObject.GetComponent<BeaconBehaviour>();
         }
     }
 
@@ -237,4 +204,17 @@ public class PlayerBehaviour : MonoBehaviour
             nearBeaconPosition = Vector3.zero;
         }
     }
+
+    // 新增：设置moveInput的public方法
+    public void SetMoveInput(float input)
+    {
+        moveInput = input;
+    }
+
+    // 新增：获取isNearBeacon的public方法
+    public bool IsNearBeacon()
+    {
+        return isNearBeacon;
+    }
+    
 }
