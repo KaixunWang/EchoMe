@@ -111,13 +111,14 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.Log("E pressed near switch");
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
-
-        if(Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho()){
+        }
+        
+        if(Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())
+        {
+            Debug.Log("R pressed to summon echo");
             SummonEcho();
-
         }
     }
-
     public void MoveLeft()
     {
         transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
@@ -244,7 +245,8 @@ public class PlayerBehaviour : MonoBehaviour
         return isNearBeacon;
     }
     
-    public bool CheckGrounded(){
+    public bool CheckGrounded()
+    {
         //3raycast
         Collider2D col = GetComponent<Collider2D>();
         float colliderWidth = 0.8f;
