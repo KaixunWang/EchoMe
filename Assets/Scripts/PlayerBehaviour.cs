@@ -13,6 +13,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float moveInput = 0f;
     private bool isNearBeacon = false;
+
+    private bool isNearSwitch = false;
+    private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
+    private BoxesBehavior boxes = null;
+
     public bool getState()
     {
         return animator.GetBool("IsShadow");
@@ -100,8 +105,16 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("E pressed");
             SwitchShadow();
         }
+
+
+        if (Input.GetKeyDown(KeyCode.E) && isNearSwitch &&switchObject != null)
+        {
+            Debug.Log("E pressed near switch");
+            switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+
         if(Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho()){
             SummonEcho();
+
         }
     }
 
@@ -156,7 +169,29 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+        if (collision.gameObject.name == "Boxes")
+        {
+            boxes = collision.gameObject.GetComponent<BoxesBehavior>();
+            Debug.Log("Collided with Boxes");
+            boxes.SetSpeed(moveSpeed); // 设置盒子的移动速度
+            if (collision.contacts[0].normal.x > 0)
+            {
+                Debug.Log("Collision on right side, pushing left");
+                // 如果碰撞发生在右侧，向左推动
+                boxes.PushLeft();
+            }
+            else if (collision.contacts[0].normal.x < 0)
+            {
+                Debug.Log("Collision on left side, pushing right");
+                // 如果碰撞发生在左侧，向右推动
+                boxes.PushRight();
+            }
+        }
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -168,6 +203,13 @@ public class PlayerBehaviour : MonoBehaviour
             nearBeaconPosition = other.gameObject.transform.position;
             beaconBehaviour = other.gameObject.GetComponent<BeaconBehaviour>();
         }
+        
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is near Switch");
+            isNearSwitch = true;
+            switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -177,11 +219,22 @@ public class PlayerBehaviour : MonoBehaviour
             isNearBeacon = false;
             nearBeaconPosition = Vector3.zero;
         }
+        
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is near Switch");
+            isNearSwitch = false;
+            if (switchObject != null)
+            {
+                switchObject = null; // 清除引用
+            }
+        }
     }
 
     // 新增：设置moveInput的public方法
     public void SetMoveInput(float input)
     {
+
         moveInput = input;
     }
 

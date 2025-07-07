@@ -57,6 +57,12 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [SerializeField,HideInInspector]
         private bool isOpened;
 
+        public void SetDoor(bool state)
+        {
+            Debug.Log("Door state set to: " + state);
+            IsOpened = state;
+        }
+
         private void Start()
         {
             Animator.Play(isOpened ? "Opened" : "Closed");
