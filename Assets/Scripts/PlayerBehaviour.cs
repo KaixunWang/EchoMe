@@ -19,6 +19,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public Vector3 nearBeaconPosition;
     private BeaconBehaviour beaconBehaviour;
+
     void Start()
     {
         QualitySettings.vSyncCount = 0;           // 关闭 VSync
@@ -99,6 +100,9 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("E pressed");
             SwitchShadow();
         }
+        if(Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho()){
+            SummonEcho();
+        }
     }
 
     public void MoveLeft()
@@ -116,8 +120,12 @@ public class PlayerBehaviour : MonoBehaviour
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
+    public void Interact(){
 
-
+    }
+    public void SummonEcho(){
+        beaconBehaviour.SwitchPlayer(nearBeaconPosition);
+    }
 
     // 当shadow销毁时调用，让player回到正常状态
     public void ReturnToPlayer()
