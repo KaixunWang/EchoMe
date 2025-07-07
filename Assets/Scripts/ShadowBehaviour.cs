@@ -175,5 +175,6 @@ public class ShadowBehaviour : MonoBehaviour
     {
         beaconBehaviour = p;
         input=p.getInput();
+        input.Clear();
     }
 }

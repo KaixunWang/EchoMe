@@ -15,12 +15,14 @@ public class EchoBehaviour : MonoBehaviour
     private bool lastWInput = false;
     private bool lastEInput = false;
     private bool lastGInput = false;
+    private float echoDuration = 10f;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         // simulatedInputs 需要在外部赋值
+        StartCoroutine(DestroyAfterTime());
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class EchoBehaviour : MonoBehaviour
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
         // 跳跃用input[0]模拟key(W), 只在keydown时触发
-        if (IsWKeyDown(input) && isGrounded)
+        if (input[0] && isGrounded)
         {
             animator.SetBool("IsJumping", true);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -129,4 +131,10 @@ public class EchoBehaviour : MonoBehaviour
 
     }
 
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(echoDuration);
+        
+        Destroy(gameObject);
+    }
 }
