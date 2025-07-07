@@ -86,23 +86,23 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void MoveLeft()
+    public void MoveLeft()
     {
         transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
     }
 
-    void MoveRight()
+    public void MoveRight()
     {
         transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
     }
 
-    void Jump()
+    public void Jump()
     {
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    void SwitchShadow()
+    public void SwitchShadow()
     {
         Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
@@ -232,5 +232,17 @@ public class PlayerBehaviour : MonoBehaviour
             isNearBeacon = false;
             nearBeaconPosition = Vector3.zero;
         }
+    }
+
+    // 新增：设置moveInput的public方法
+    public void SetMoveInput(float input)
+    {
+        moveInput = input;
+    }
+
+    // 新增：获取isNearBeacon的public方法
+    public bool IsNearBeacon()
+    {
+        return isNearBeacon;
     }
 }
