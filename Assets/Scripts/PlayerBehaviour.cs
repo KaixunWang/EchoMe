@@ -18,7 +18,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         QualitySettings.vSyncCount = 0;           // 关闭 VSync
-        Application.targetFrameRate = 60;         // 手动锁帧
+        Application.targetFrameRate = 120;         // 手动锁帧
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }

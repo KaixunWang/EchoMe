@@ -52,7 +52,6 @@ public class ShadowBehaviour : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("WASD");
         if(input == null){
             Debug.LogError("Input list is not set. Please set the input list from BeaconBehaviour.");
             return;
@@ -114,6 +113,7 @@ public class ShadowBehaviour : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        currentFrame++;
     }
 
     void MoveLeft()
@@ -144,7 +144,7 @@ public class ShadowBehaviour : MonoBehaviour
                 break;
             }
         }
-        currentFrame++;
+        
     }
 
     void OnCollisionStay2D(Collision2D collision)
