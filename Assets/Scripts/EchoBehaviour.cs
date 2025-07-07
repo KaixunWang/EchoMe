@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EchoBehaviour : MonoBehaviour
 {
-    //输入是模拟的list，list代表每帧的各个按键状况, list对应这一帧的W A D E 是否按下
-    public List<bool[]> simulatedInputs; // 每帧的输入，bool[0]=W, bool[1]=A, bool[2]=D, bool[3]=E
+    //输入是模拟的list，list代表每帧的各个按键状况, list对应这一帧的W A D E G是否按下
+    public List<bool[]> simulatedInputs; // 每帧的输入，bool[0]=W, bool[1]=A, bool[2]=D, bool[3]=E, bool[4]=G
     private int currentFrame = 0;
     private Rigidbody2D rb;
     private Animator animator;
@@ -14,7 +14,7 @@ public class EchoBehaviour : MonoBehaviour
     private bool isGrounded = false;
     private bool lastWInput = false;
     private bool lastEInput = false;
-
+    private bool lastGInput = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,11 +60,12 @@ public class EchoBehaviour : MonoBehaviour
         // 使用交互物品（E键keydown）
         if (IsEKeyDown(input))
         {
-            // 只有靠近beacon且不是影子状态才切换
-            if (IsNearBeacon() && !animator.GetBool("IsShadow"))
-            {
-                SwitchShadow();
-            }
+           Interact();
+        }
+
+        if (IsGKeyDown(input))
+        {
+            Destroy(gameObject);
         }
 
         currentFrame++;
@@ -115,4 +116,17 @@ public class EchoBehaviour : MonoBehaviour
         lastEInput = input[3];
         return result;
     }
+
+    private bool IsGKeyDown(bool[] input)
+    {
+        bool result = input[4] && !lastGInput;
+        lastGInput = input[4];
+        return result;
+    }
+    private void Interact()
+    {
+        //开关
+
+    }
+
 }

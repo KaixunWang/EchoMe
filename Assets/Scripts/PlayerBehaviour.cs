@@ -124,8 +124,8 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.LogError("Failed to instantiate Shadow prefab");
             return;
         }
-        
-        Debug.Log("Shadow instantiated successfully at: " + shadow.transform.position);
+        shadow.GetComponent<SpriteRenderer>().sortingOrder =3;
+        Debug.Log("Shadow instantiated successfully at: " + shadow.transform.position + "Shadow's Layer is " + shadow.GetComponent<Renderer>().sortingLayerID);
 
         // 获取主摄像机并设置目标
         GameObject mainCamera = GameObject.Find("Main Camera");
