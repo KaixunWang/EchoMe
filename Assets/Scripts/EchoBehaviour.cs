@@ -28,6 +28,13 @@ public class EchoBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+    void FixedUpdate(){
+        isGrounded = CheckGrounded();
+        if(isGrounded){
+            animator.SetBool("IsJumping", false);
+        }
         if (simulatedInputs == null || currentFrame >= simulatedInputs.Count) return;
         var input = simulatedInputs[currentFrame];
 
@@ -53,7 +60,7 @@ public class EchoBehaviour : MonoBehaviour
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
         // 跳跃用input[0]模拟key(W), 只在keydown时触发
-        if (input[0] && isGrounded)
+        if (IsWKeyDown(input) && isGrounded)
         {
             animator.SetBool("IsJumping", true);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -73,23 +80,20 @@ public class EchoBehaviour : MonoBehaviour
         currentFrame++;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        foreach (var contact in collision.contacts)
-        {
-            if (contact.normal.y > 0.5f)
-            {
-                isGrounded = true;
-                animator.SetBool("IsJumping", false);
-                break;
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        isGrounded = false;
-        animator.SetBool("IsJumping", true);
+    public bool CheckGrounded(){
+        //3raycast
+        Collider2D col = GetComponent<Collider2D>();
+        float colliderWidth = 0.8f;
+        float colliderHeight = 0.5f;
+        Vector3 basePos = col.bounds.center + Vector3.down * (colliderHeight / 2f - 0.01f);
+        Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
+        Vector3 center = basePos;
+        Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
+        float groundCheckDistance = 1.2f;
+        int groundLayer = LayerMask.GetMask("Ground");
+        return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer);
     }
 
     private bool IsNearBeacon()

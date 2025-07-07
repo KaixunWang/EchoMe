@@ -22,7 +22,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         QualitySettings.vSyncCount = 0;           // 关闭 VSync
-        Application.targetFrameRate = 120;         // 手动锁帧
+        Application.targetFrameRate = 60;         // 手动锁帧
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -54,7 +54,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
-
+        isGrounded = CheckGrounded();
+        if(isGrounded){
+            animator.SetBool("IsJumping", false);
+        }
         if (!isShadow)
         {
             // 只有在非影子状态下才允许移动
@@ -145,44 +148,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision with " + collision.gameObject.name);
-        foreach (var contact in collision.contacts)
-        {
-            if (contact.normal.y > 0.5f)
-            {
-                isGrounded = true;
-                animator.SetBool("IsJumping", false);
-                break;
-            }
-        }
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        isGrounded = false;
-
-        foreach (var contact in collision.contacts)
-        {
-            if (contact.normal.y > 0.5f)
-            {
-                isGrounded = true;
-                animator.SetBool("IsJumping", false);
-                break;
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        Debug.Log("Collision exit with " + collision.gameObject.name);
-        if (collision.gameObject.name == "GroundMap")
-        {
-            isGrounded = false;
-            animator.SetBool("IsJumping", true);
-        }
-    }
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -217,4 +183,22 @@ public class PlayerBehaviour : MonoBehaviour
         return isNearBeacon;
     }
     
+    public bool CheckGrounded(){
+        //3raycast
+        Collider2D col = GetComponent<Collider2D>();
+        float colliderWidth = 0.8f;
+        float colliderHeight = 0.5f;
+        Vector3 basePos = col.bounds.center + Vector3.down * (colliderHeight / 2f - 0.01f);
+        Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
+        Vector3 center = basePos;
+        Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
+        float groundCheckDistance = 0.65f;
+        int groundLayer = LayerMask.GetMask("Ground");
+        Debug.DrawRay(left, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(center, Vector2.down * groundCheckDistance, Color.green);
+        Debug.DrawRay(right, Vector2.down * groundCheckDistance, Color.blue);
+        return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer);
+    }
 }
