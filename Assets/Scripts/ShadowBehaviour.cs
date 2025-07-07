@@ -72,6 +72,18 @@ public class ShadowBehaviour : MonoBehaviour
             Debug.Log("Jump");
             Jump();
         }
+        if(Input.GetKeyDown(KeyCode.G)){ //立刻销毁shadow
+            GameObject player = GameObject.Find("Player");
+            if (player != null)
+            {
+                PlayerBehaviour playerBehaviour = player.GetComponent<PlayerBehaviour>();
+                if (playerBehaviour != null)
+                {
+                    playerBehaviour.ReturnToPlayer();
+                }
+            }
+            Destroy(gameObject);
+        }
     }
 
     void MoveLeft()
@@ -121,7 +133,7 @@ public class ShadowBehaviour : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Tilemap")
+        if (collision.gameObject.name == "GroundMap")
         {
             isGrounded = false;
             animator.SetBool("IsJumping", true);
