@@ -15,6 +15,10 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isNearBeacon = false;
     private Vector3 nearBeaconPosition;
 
+    public bool getState()
+    {
+        return animator.GetBool("IsShadow");
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
