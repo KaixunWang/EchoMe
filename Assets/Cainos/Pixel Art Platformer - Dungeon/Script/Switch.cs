@@ -17,6 +17,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public SpriteRenderer spriteRenderer;
         [FoldoutGroup("Reference")] public Sprite spriteOn;
         [FoldoutGroup("Reference")] public Sprite spriteOff;
+        [FoldoutGroup("Reference")] public Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
         private Animator Animator
         {
@@ -33,6 +34,24 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             Animator.SetBool("IsOn", isOn);
             IsOn = isOn;
         }
+
+        public void TriggerDoor() {
+            if (IsOn && door != null) {
+                Debug.Log("Switch: Open the door");
+                door.SetDoor(true);
+            }
+            else if (!IsOn && door != null) {
+                Debug.Log("Switch: Close the door");
+                door.SetDoor(false);
+            }
+        }
+
+        void Update()
+        {
+            Animator.SetBool("IsOn", isOn);
+            TriggerDoor();
+        }
+
 
         [FoldoutGroup("Runtime"), ShowInInspector]
         public bool IsOn
