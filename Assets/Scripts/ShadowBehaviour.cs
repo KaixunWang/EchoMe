@@ -12,16 +12,18 @@ public class ShadowBehaviour : MonoBehaviour
     private bool isGrounded = false;
     private float moveInput = 0f;
     private float shadowDuration = 10f; // 影子持续时间10秒
-
+    private BeaconBehaviour beaconBehaviour = null;
+    
+    private int currentFrame = 0;
+    private List<bool[]> input;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
         // 启动自动销毁协程
         StartCoroutine(DestroyAfterTime());
     }
-
+    
     // 协程：10秒后自动销毁shadow并通知player
     IEnumerator DestroyAfterTime()
     {
@@ -38,7 +40,7 @@ public class ShadowBehaviour : MonoBehaviour
                 playerBehaviour.ReturnToPlayer();
             }
         }
-        
+        beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
         // 销毁shadow
         Destroy(gameObject);
     }
@@ -50,17 +52,29 @@ public class ShadowBehaviour : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("WASD");
+        if(input == null){
+            Debug.LogError("Input list is not set. Please set the input list from BeaconBehaviour.");
+            return;
+        }
+        input.Add(new bool[5] { false, false, false, false, false }); // 初始化当前帧的输入状态
+        // 获取当前帧的输入
+        // input[currentFrame] 是一个 bool 数组，代表每帧的 W, A, D, E, G 键状态
+        // W: input[currentFrame][0], A: input[currentFrame][1], D: input[currentFrame][2], E: input[currentFrame][3], G: input[currentFrame][4]
+        var inputState = input[currentFrame];
         if (Input.GetKey(KeyCode.A))
         {
             animator.SetBool("IsWalking", true);
             transform.localScale = new Vector3(-3, 3, 1);
             moveInput = -1f;
+            inputState[1] = true; // A键按下
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetBool("IsWalking", true);
             transform.localScale = new Vector3(3, 3, 1);
             moveInput = 1f;
+            inputState[2] = true; // D键按下
         }
         else
         {
@@ -71,6 +85,22 @@ public class ShadowBehaviour : MonoBehaviour
         {
             Debug.Log("Jump");
             Jump();
+            inputState[0] = true; // W键按下
+        }
+        if(Input.GetKeyDown(KeyCode.G)){ //立刻销毁shadow
+            GameObject player = GameObject.Find("Player");
+            if (player != null)
+            {
+                PlayerBehaviour playerBehaviour = player.GetComponent<PlayerBehaviour>();
+                if (playerBehaviour != null)
+                {
+                    playerBehaviour.ReturnToPlayer();
+                }
+            }
+            beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
+            inputState[4] = true; // G键按下
+            Debug.Log("Shadow destroyed by G key");
+            Destroy(gameObject);
         }
     }
 
@@ -102,6 +132,7 @@ public class ShadowBehaviour : MonoBehaviour
                 break;
             }
         }
+        currentFrame++;
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -121,10 +152,16 @@ public class ShadowBehaviour : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Tilemap")
+        if (collision.gameObject.name == "GroundMap")
         {
             isGrounded = false;
             animator.SetBool("IsJumping", true);
         }
+    }
+
+    public void setBeaconBehaviour(BeaconBehaviour p)
+    {
+        beaconBehaviour = p;
+        input=p.getInput();
     }
 }
