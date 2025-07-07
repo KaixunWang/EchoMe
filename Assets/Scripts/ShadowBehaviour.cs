@@ -40,7 +40,7 @@ public class ShadowBehaviour : MonoBehaviour
                 playerBehaviour.ReturnToPlayer();
             }
         }
-        beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
+        //beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
         // 销毁shadow
         Destroy(gameObject);
     }
@@ -116,7 +116,7 @@ public class ShadowBehaviour : MonoBehaviour
                     playerBehaviour.ReturnToPlayer();
                 }
             }
-            beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
+            //beaconBehaviour.SwitchPlayer(player.GetComponent<PlayerBehaviour>().nearBeaconPosition);
             Debug.Log("Shadow destroyed by G key");
             Destroy(gameObject);
         }
@@ -138,6 +138,9 @@ public class ShadowBehaviour : MonoBehaviour
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
+    public void Interact(){
+        
+    }
 
     public bool CheckGrounded(){
         //3raycast
@@ -148,7 +151,7 @@ public class ShadowBehaviour : MonoBehaviour
         Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
         Vector3 center = basePos;
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
-        float groundCheckDistance = 1.2f;
+        float groundCheckDistance = 0.65f;
         int groundLayer = LayerMask.GetMask("Ground");
         return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||

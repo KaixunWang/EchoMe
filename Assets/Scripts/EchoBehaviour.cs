@@ -6,6 +6,7 @@ public class EchoBehaviour : MonoBehaviour
 {
     //输入是模拟的list，list代表每帧的各个按键状况, list对应这一帧的W A D E G是否按下
     public List<bool[]> simulatedInputs; // 每帧的输入，bool[0]=W, bool[1]=A, bool[2]=D, bool[3]=E, bool[4]=G
+    public BeaconBehaviour beaconBehaviour;
     private int currentFrame = 0;
     private Rigidbody2D rb;
     private Animator animator;
@@ -74,6 +75,7 @@ public class EchoBehaviour : MonoBehaviour
 
         if (IsGKeyDown(input))
         {
+            beaconBehaviour.SetHasEcho(false);
             Destroy(gameObject);
         }
 
@@ -89,7 +91,7 @@ public class EchoBehaviour : MonoBehaviour
         Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
         Vector3 center = basePos;
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
-        float groundCheckDistance = 1.2f;
+        float groundCheckDistance = 0.65f;
         int groundLayer = LayerMask.GetMask("Ground");
         return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
@@ -138,7 +140,7 @@ public class EchoBehaviour : MonoBehaviour
     IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(echoDuration);
-        
+        beaconBehaviour.SetHasEcho(false);
         Destroy(gameObject);
     }
 }

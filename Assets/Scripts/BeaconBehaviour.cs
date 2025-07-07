@@ -5,6 +5,7 @@
     public class BeaconBehaviour : MonoBehaviour
     {
         private List<bool[]> memorizedInput=new List<bool[]>();
+        private bool hasEcho=false;
         // Start is called before the first frame update
         void Start()
         {        
@@ -51,6 +52,7 @@
 
             Debug.Log("Camera target set to shadow");
         }
+
         public void SwitchPlayer(Vector3 nearBeaconPosition){
             //generate echo
             // 尝试加载 Echo prefab
@@ -64,6 +66,8 @@
             // 实例化 Echo
             GameObject echo = Instantiate(echoPrefab, nearBeaconPosition, Quaternion.identity);
             echo.GetComponent<EchoBehaviour>().simulatedInputs=memorizedInput;
+            echo.GetComponent<EchoBehaviour>().beaconBehaviour=this;
+            hasEcho=true;
             if (echo == null)
             {
                 Debug.LogError("Failed to instantiate Shadow prefab");
@@ -72,12 +76,21 @@
 
             Debug.Log("Echo instantiated successfully at: " + echo.transform.position);
         }
+
         // Update is called once per frame
         void Update()
         {
             
         }
+
         public List<bool[]> getInput(){
             return memorizedInput;
+        }
+
+        public bool HasEcho(){
+            return hasEcho;
+        }
+        public void SetHasEcho(bool hasEcho){
+            this.hasEcho=hasEcho;
         }
     }
