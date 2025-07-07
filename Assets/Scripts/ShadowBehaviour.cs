@@ -29,20 +29,10 @@ public class ShadowBehaviour : MonoBehaviour
         
         // 查找player并通知它回到正常状态
         GameObject player = GameObject.Find("Player");
-        GameObject playerFake = GameObject.Find("PlayerFake");
 
         if (player != null)
         {
             PlayerBehaviour playerBehaviour = player.GetComponent<PlayerBehaviour>();
-            if (playerBehaviour != null)
-            {
-                playerBehaviour.ReturnToPlayer();
-            }
-        }
-
-        if (playerFake != null)
-        {
-            PlayerBehaviour playerBehaviour = playerFake.GetComponent<PlayerBehaviour>();
             if (playerBehaviour != null)
             {
                 playerBehaviour.ReturnToPlayer();

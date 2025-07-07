@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    public bool isGrounded = false;
     [SerializeField]
     private Rigidbody2D rb;
     private float jumpForce = 10;
     private Animator animator;
     private float moveSpeed = 6;
-    private bool isGrounded = false;
+    
     private float moveInput = 0f;
     private bool isNearBeacon = false;
-
+    private Vector3 nearBeaconPosition;
 
     void Start()
     {
@@ -107,13 +108,6 @@ public class PlayerBehaviour : MonoBehaviour
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
 
-        // 查找 ShadowBeacon
-        GameObject shadowBeacon = GameObject.Find("ShadowBeacon");
-        if (shadowBeacon == null)
-        {
-            Debug.LogError("ShadowBeacon not found in scene!");
-            return;
-        }
         
         // 尝试加载 Shadow prefab
         GameObject shadowPrefab = Resources.Load<GameObject>("Prefab/Shadow");
@@ -124,7 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         
         // 实例化 Shadow
-        GameObject shadow = Instantiate(shadowPrefab, shadowBeacon.transform.position, Quaternion.identity);
+        GameObject shadow = Instantiate(shadowPrefab, nearBeaconPosition, Quaternion.identity);
         if (shadow == null)
         {
             Debug.LogError("Failed to instantiate Shadow prefab");
@@ -167,7 +161,7 @@ public class PlayerBehaviour : MonoBehaviour
         // 重置移动输入
         moveInput = 0f;
         
-        // 如果是player获取主摄像机并设置回player，如果是playerfake则不管
+        // 如果是player获取主摄像机并设置回player
         if (gameObject.name == "Player")
         {
             GameObject mainCamera = GameObject.Find("Main Camera");
@@ -180,10 +174,6 @@ public class PlayerBehaviour : MonoBehaviour
                     Debug.Log("Camera target set back to player");
                 }
             }
-        }
-        else
-        {
-            Debug.Log("This is PlayerFake, not setting camera target");
         }
     }
 
@@ -218,7 +208,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Tilemap")
+        Debug.Log("Collision exit with " + collision.gameObject.name);
+        if (collision.gameObject.name == "GroundMap")
         {
             isGrounded = false;
             animator.SetBool("IsJumping", true);
@@ -227,17 +218,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "Beacon" || other.gameObject.name == "ShadowBeacon")
+        if (other.gameObject.name == "Beacon")
         {
             isNearBeacon = true;
+            nearBeaconPosition = other.gameObject.transform.position;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.name == "Beacon" || other.gameObject.name == "ShadowBeacon")
+        if (other.gameObject.name == "Beacon")
         {
             isNearBeacon = false;
+            nearBeaconPosition = Vector3.zero;
         }
     }
 }
