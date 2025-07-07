@@ -102,6 +102,18 @@ public class ShadowBehaviour : MonoBehaviour
             Debug.Log("Shadow destroyed by G key");
             Destroy(gameObject);
         }
+        if(Input.GetKeyDown(KeyCode.G)){ //立刻销毁shadow
+            GameObject player = GameObject.Find("Player");
+            if (player != null)
+            {
+                PlayerBehaviour playerBehaviour = player.GetComponent<PlayerBehaviour>();
+                if (playerBehaviour != null)
+                {
+                    playerBehaviour.ReturnToPlayer();
+                }
+            }
+            Destroy(gameObject);
+        }
     }
 
     void MoveLeft()
