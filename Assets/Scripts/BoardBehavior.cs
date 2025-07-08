@@ -70,4 +70,12 @@ public class BoardBehavior : MonoBehaviour
         Animator.Play(isOpened ? "Opened" : "Closed");
         IsOpened = isOpened;
     }
+    public bool GetBoardState()
+    {
+        return isOpened;
+    }
+    public void SetBoardState(bool state)
+    {
+        isOpened = state;
+    }
 }
