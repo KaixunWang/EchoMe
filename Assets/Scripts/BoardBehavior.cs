@@ -11,12 +11,15 @@ public class BoardBehavior : MonoBehaviour
     [SerializeField]
     private Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
-    public void TriggerDoor() {
-        if (isOpen && door != null) {
+    public void TriggerDoor()
+    {
+        if (isOpen && door != null)
+        {
             Debug.Log("Open the door");
             door.SetDoor(true);
         }
-        else if (!isOpen && door != null) {
+        else if (!isOpen && door != null)
+        {
             Debug.Log("Close the door");
             door.SetDoor(false);
         }
@@ -53,5 +56,13 @@ public class BoardBehavior : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
             isOpen = false;
+    }
+    public bool GetBoardState()
+    {
+        return isOpen;
+    }
+    public void SetBoardState(bool state)
+    {
+        isOpen = state;
     }
 }

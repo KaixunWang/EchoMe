@@ -6,8 +6,8 @@ using UnityEngine;
 public class SceneState
 {
     public Vector3 playerPosition;
-    // public bool switchState;
-    // public bool pressurePlateState;
-    // public bool doorState;
-    // public Vector3 boxPosition;
+    public List<bool> switchStates = new List<bool>();
+    public List<bool> pressurePlateStates = new List<bool>();
+    public List<bool> doorStates = new List<bool>();
+    public List<Vector3> boxPositions = new List<Vector3>();
 }
