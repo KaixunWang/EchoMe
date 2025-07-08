@@ -34,6 +34,9 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void SwitchShadow()
     {
+        if(beaconBehaviour.HasEcho()){
+            return;
+        }
         Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
