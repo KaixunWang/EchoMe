@@ -278,6 +278,11 @@ public class PlayerBehaviour : MonoBehaviour
                 switchObject = null; // 清除引用
             }
         }
+        if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
+        {
+            isInDoor = false;
+        }
+
         // if (other.gameObject.name == "Board")
         // {
         //     Debug.Log("Player is near Board");
@@ -338,7 +343,7 @@ public class PlayerBehaviour : MonoBehaviour
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
         
-        //SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
+        SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
 
     public bool CheckGrounded()

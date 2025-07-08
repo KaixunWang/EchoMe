@@ -52,7 +52,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f38dbd60d9c6d2a418e2529300bf4378, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   rb: {fileID: 0}
+  Exit: {fileID: 0}
   nearBeaconPosition: {x: 0, y: 0, z: 0}
 --- !u!95 &6001218066578299396
 Animator:
@@ -183,7 +184,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.1}
+  m_Offset: {x: 0.015, y: -0.12}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -195,4 +196,4 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.5}
-  m_EdgeRadius: 0.1
+  m_EdgeRadius: 0.02
