@@ -70,6 +70,16 @@ public class BoardBehavior : MonoBehaviour
         Animator.Play(isOpened ? "Opened" : "Closed");
         IsOpened = isOpened;
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        IsOpened = true;
+        TriggerDoor(); // 触发门的开关
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        IsOpened = false; // 切换门的开关状态
+        TriggerDoor(); // 触发门的开关
+    }
     public bool GetBoardState()
     {
         return isOpened;

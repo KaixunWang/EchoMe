@@ -38,6 +38,9 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void SwitchShadow()
     {
+        if(beaconBehaviour.HasEcho()){
+            return;
+        }
         Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
@@ -224,6 +227,7 @@ public class PlayerBehaviour : MonoBehaviour
             isNearSwitch = true;
             switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
         }
+
         if (other.gameObject.name == "Board")
         {
             Debug.Log("Player is near Board");
@@ -237,6 +241,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         
         if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
+
         {
             if (Exit.IsOpened)
             {
@@ -245,6 +250,7 @@ public class PlayerBehaviour : MonoBehaviour
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
             }
         }
+
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -272,16 +278,16 @@ public class PlayerBehaviour : MonoBehaviour
                 switchObject = null; // 清除引用
             }
         }
-        if (other.gameObject.name == "Board")
-        {
-            Debug.Log("Player is near Board");
-            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
-            board.IsOpened = false; // 切换门的开关状态
-            if (board != null)
-            {
-                board.TriggerDoor(); // 触发门的开关
-            }
-        }
+        // if (other.gameObject.name == "Board")
+        // {
+        //     Debug.Log("Player is near Board");
+        //     BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+        //     board.IsOpened = false; // 切换门的开关状态
+        //     if (board != null)
+        //     {
+        //         board.TriggerDoor(); // 触发门的开关
+        //     }
+        // }
     }
 
     //新增：设置moveInput的public方法
@@ -346,12 +352,17 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 center = basePos;
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
         float groundCheckDistance = 0.65f;
+        //boxLayer is fine too
         int groundLayer = LayerMask.GetMask("Ground");
+        int itemCanJumpLayer = LayerMask.GetMask("ItemCanJump");
         Debug.DrawRay(left, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(center, Vector2.down * groundCheckDistance, Color.green);
         Debug.DrawRay(right, Vector2.down * groundCheckDistance, Color.blue);
         return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
-               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer);
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(left, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(center, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, itemCanJumpLayer);
     }
 }

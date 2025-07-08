@@ -19,6 +19,8 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public Sprite spriteOff;
         [FoldoutGroup("Reference")] public Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
+        [FoldoutGroup("Settings")] public float autoCloseDelay = 3f; // 自动关闭延迟时间
+
         private Animator Animator
         {
             get
@@ -28,6 +30,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             }
         }
         private Animator animator;
+        private Coroutine autoCloseCoroutine; // 自动关闭协程
 
         private void Start()
         {
@@ -52,6 +55,13 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             TriggerDoor();
         }
 
+        // 自动关闭协程
+        private IEnumerator AutoCloseCoroutine()
+        {
+            yield return new WaitForSeconds(autoCloseDelay);
+            IsOn = false;
+            autoCloseCoroutine = null;
+        }
 
         [FoldoutGroup("Runtime"), ShowInInspector]
         public bool IsOn
@@ -59,6 +69,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             get { return isOn; }
             set
             {
+                bool previousState = isOn;
                 isOn = value;
 
                 #if UNITY_EDITOR
@@ -74,6 +85,28 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                 if (Application.isPlaying )
                 {
                     Animator.SetBool("IsOn", isOn);
+                    
+                    // 当开关从关闭变为开启时，启动自动关闭协程
+                    if (!previousState && isOn)
+                    {
+                        // 停止之前的自动关闭协程（如果存在）
+                        if (autoCloseCoroutine != null)
+                        {
+                            StopCoroutine(autoCloseCoroutine);
+                        }
+                        
+                        // 启动新的自动关闭协程
+                        autoCloseCoroutine = StartCoroutine(AutoCloseCoroutine());
+                    }
+                    // 当开关关闭时，停止自动关闭协程
+                    else if (previousState && !isOn)
+                    {
+                        if (autoCloseCoroutine != null)
+                        {
+                            StopCoroutine(autoCloseCoroutine);
+                            autoCloseCoroutine = null;
+                        }
+                    }
                 }
                 else
                 {
