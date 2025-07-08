@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2494348015935891355}
   - component: {fileID: 1483602656868436515}
   - component: {fileID: 6001218066578299396}
-  - component: {fileID: -1482735054527779998}
+  - component: {fileID: 3135143896922576961}
   m_Layer: 10
   m_Name: Echo
   m_TagString: Untagged
@@ -153,7 +153,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &-1482735054527779998
+--- !u!61 &3135143896922576961
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
