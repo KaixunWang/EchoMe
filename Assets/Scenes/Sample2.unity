@@ -11316,6 +11316,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93cef46dc0c1f4247822d000f5f914c8, type: 3}
+--- !u!1 &1289120564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7620926244061946347, guid: 93cef46dc0c1f4247822d000f5f914c8, type: 3}
+  m_PrefabInstance: {fileID: 1289120563}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1410597029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11402,7 +11407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718c32aaef7b31f4399cd4d23141878d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1289120564}
   switches: []
   pressurePlates: []
   doors: []

@@ -219,17 +219,18 @@ public class PlayerBehaviour : MonoBehaviour
             isNearSwitch = true;
             switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
         }
-        if (other.gameObject.name == "Board")
-        {
-            Debug.Log("Player is near Board");
-            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
-            board.IsOpened = true; // 切换门的开关状态
-            Debug.Log("Board is opened: " + board.IsOpened);
-            if (board != null)
-            {
-                board.TriggerDoor(); // 触发门的开关
-            }
-        }
+
+        // if (other.gameObject.name == "Board")
+        // {
+        //     Debug.Log("Player is near Board");
+        //     BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+        //     board.IsOpened = true; // 切换门的开关状态
+        //     if (board != null)
+        //     {
+        //         board.TriggerDoor(); // 触发门的开关
+        //     }
+        // }
+
         if (other.gameObject.name == "Door" )
         {
             Exit = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>();
@@ -240,6 +241,7 @@ public class PlayerBehaviour : MonoBehaviour
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
             }
         }
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -259,16 +261,16 @@ public class PlayerBehaviour : MonoBehaviour
                 switchObject = null; // 清除引用
             }
         }
-        if (other.gameObject.name == "Board")
-        {
-            Debug.Log("Player is near Board");
-            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
-            board.IsOpened = false; // 切换门的开关状态
-            if (board != null)
-            {
-                board.TriggerDoor(); // 触发门的开关
-            }
-        }
+        // if (other.gameObject.name == "Board")
+        // {
+        //     Debug.Log("Player is near Board");
+        //     BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+        //     board.IsOpened = false; // 切换门的开关状态
+        //     if (board != null)
+        //     {
+        //         board.TriggerDoor(); // 触发门的开关
+        //     }
+        // }
     }
 
     //新增：设置moveInput的public方法
