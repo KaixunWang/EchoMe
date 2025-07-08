@@ -5,14 +5,13 @@ using UnityEngine;
 public class BoardBehavior : MonoBehaviour
 {
     private Animator animator;
-    public bool isOpen = false;
+    private bool isOpen = false;
     private static InteractiveManager sManager;
 
     [SerializeField]
     private Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
-    public void TriggerDoor()
-    {
+    public void TriggerDoor(){
         if (isOpen && door != null)
         {
             Debug.Log("Open the door");
