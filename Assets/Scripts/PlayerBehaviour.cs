@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public bool isGrounded = false;
+    public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
     private float jumpForce = 10;
@@ -13,7 +14,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float moveInput = 0f;
     private bool isNearBeacon = false;
-
     private bool isNearSwitch = false;
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
     private BoxesBehavior boxes = null;
@@ -41,6 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (isPaused) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态
         bool isShadow = animator.GetBool("IsShadow");
 
@@ -58,6 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (isPaused) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
         isGrounded = CheckGrounded();
