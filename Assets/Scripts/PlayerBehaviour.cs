@@ -278,12 +278,17 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 center = basePos;
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
         float groundCheckDistance = 0.65f;
+        //boxLayer is fine too
         int groundLayer = LayerMask.GetMask("Ground");
+        int itemCanJumpLayer = LayerMask.GetMask("ItemCanJump");
         Debug.DrawRay(left, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(center, Vector2.down * groundCheckDistance, Color.green);
         Debug.DrawRay(right, Vector2.down * groundCheckDistance, Color.blue);
         return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
-               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer);
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(left, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(center, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, itemCanJumpLayer);
     }
 }
