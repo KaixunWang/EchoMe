@@ -285,6 +285,7 @@ public class EchoBehaviour : MonoBehaviour
     
     public bool CheckGrounded()
     {
+        //3raycast
         Collider2D col = GetComponent<Collider2D>();
         float colliderWidth = 0.8f;
         float colliderHeight = 0.5f;
@@ -294,9 +295,16 @@ public class EchoBehaviour : MonoBehaviour
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
         float groundCheckDistance = 0.65f;
         int groundLayer = LayerMask.GetMask("Ground");
+        int itemCanJumpLayer = LayerMask.GetMask("ItemCanJump");
+        Debug.DrawRay(left, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(center, Vector2.down * groundCheckDistance, Color.green);
+        Debug.DrawRay(right, Vector2.down * groundCheckDistance, Color.blue);
         return Physics2D.Raycast(left, Vector2.down, groundCheckDistance, groundLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer) ||
-               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer);
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, groundLayer) ||
+               Physics2D.Raycast(left, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(center, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
+               Physics2D.Raycast(right, Vector2.down, groundCheckDistance, itemCanJumpLayer);
     }
     
     public void SetInputEvents(List<TimeBasedInputEvent> events)
