@@ -294,6 +294,7 @@ public class EchoBehaviour : MonoBehaviour
         Vector3 center = basePos;
         Vector3 right = basePos + Vector3.right * (colliderWidth / 2f - 0.05f);
         float groundCheckDistance = 0.65f;
+        //boxLayer is fine too
         int groundLayer = LayerMask.GetMask("Ground");
         int itemCanJumpLayer = LayerMask.GetMask("ItemCanJump");
         Debug.DrawRay(left, Vector2.down * groundCheckDistance, Color.red);
