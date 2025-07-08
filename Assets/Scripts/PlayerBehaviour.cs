@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isNearSwitch = false;
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
     private BoxesBehavior boxes = null;
+    private bool isInputEnabled = true;
+    private Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
 
     public bool getState()
     {
@@ -70,26 +73,26 @@ public class PlayerBehaviour : MonoBehaviour
         if (!isShadow)
         {
             // 只有在非影子状态下才允许移动
-            if (Input.GetKey(KeyCode.A))
+            if (isInputEnabled && Input.GetKey(KeyCode.A))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(-3, 3, 1);
                 moveInput = -1f;
             }
-            if (Input.GetKey(KeyCode.D))
+            if (isInputEnabled && Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(3, 3, 1);
                 moveInput = 1f;
             }
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            if (isInputEnabled && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", false);
                 moveInput = 0f;
             }
 
             // 只有在非影子状态下才允许跳跃
-            if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+            if (isInputEnabled &&Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
                 Debug.Log("Jump");
                 Jump();
@@ -103,20 +106,20 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         // 切换影子的按键在任何状态下都可以使用
-        if (Input.GetKeyDown(KeyCode.E) && isNearBeacon && !isShadow)
+        if (isInputEnabled && Input.GetKeyDown(KeyCode.E) && isNearBeacon && !isShadow)
         {
             Debug.Log("E pressed");
             SwitchShadow();
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E) && isNearSwitch &&switchObject != null)
+        if (isInputEnabled && Input.GetKeyDown(KeyCode.E) && isNearSwitch &&switchObject != null)
         {
             Debug.Log("E pressed near switch");
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
         }
-        
-        if(Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())
+
+        if (isInputEnabled && Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())
         {
             Debug.Log("R pressed to summon echo");
             SummonEcho();
@@ -221,9 +224,20 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("Player is near Board");
             BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
             board.IsOpened = true; // 切换门的开关状态
+            Debug.Log("Board is opened: " + board.IsOpened);
             if (board != null)
             {
                 board.TriggerDoor(); // 触发门的开关
+            }
+        }
+        if (other.gameObject.name == "Door" )
+        {
+            Exit = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>();
+            if (Exit != null && Exit.IsOpened)
+            {
+                isInputEnabled = false; // 禁用输入
+                Debug.Log("Exit door is opened, player will go out");
+                StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
             }
         }
     }
@@ -270,6 +284,44 @@ public class PlayerBehaviour : MonoBehaviour
         return isNearBeacon;
     }
     
+    IEnumerator GoOutCoroutine()
+    {
+        bool isRight = Exit.transform.position.x > transform.position.x;
+
+        float duration = 2.0f; // 动画持续时间
+        float elapsed = 0.0f;
+
+        Vector3 initialPosition = transform.position;
+        Vector3 targetPosition = new Vector3(Exit.transform.position.x, transform.position.y, transform.position.z);
+
+        Color initialColor = GetComponent<SpriteRenderer>().color;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+
+            // 平滑移动
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
+
+            // 逐渐透明
+            Color newColor = initialColor;
+            newColor.a = Mathf.Lerp(initialColor.a, 0, t);
+            GetComponent<SpriteRenderer>().color = newColor;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
+        moveInput = 0f; // 停止移动
+        Debug.Log("Exit door opened");
+
+        // 加载下一个场景，延迟一点让动画完成
+        yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
+        
+        SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
+    }
+
     public bool CheckGrounded()
     {
         //3raycast
