@@ -768,6 +768,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 228248816795235802, guid: c39fd15cbae885b4887fb5f397bdadd5, type: 3}
       propertyPath: m_Simulated
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228248816795235802, guid: c39fd15cbae885b4887fb5f397bdadd5, type: 3}
+      propertyPath: m_UseFullKinematicContacts
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3914173341721992803, guid: c39fd15cbae885b4887fb5f397bdadd5, type: 3}
