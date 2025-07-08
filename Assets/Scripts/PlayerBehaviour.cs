@@ -54,7 +54,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
+<<<<<<< Updated upstream
 
+=======
+        isGrounded = CheckGrounded();
+        if (isGrounded)
+        {
+            animator.SetBool("IsJumping", false);
+        }
+>>>>>>> Stashed changes
         if (!isShadow)
         {
             // 只有在非影子状态下才允许移动
@@ -96,6 +104,22 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("E pressed");
             SwitchShadow();
         }
+<<<<<<< Updated upstream
+=======
+
+
+        if (Input.GetKeyDown(KeyCode.E) && isNearSwitch && switchObject != null)
+        {
+            Debug.Log("E pressed near switch");
+            switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())
+        {
+            SummonEcho();
+
+        }
+>>>>>>> Stashed changes
     }
 
     public void MoveLeft()
