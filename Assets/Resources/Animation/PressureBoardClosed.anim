@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PressureOpen
+  m_Name: PressureBoardClosed
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -505832463, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
+      value: {fileID: 21300000, guid: 156fc8a8d4f1a254ead3af65c6aa3a6a, type: 2}
     - time: 0.083333336
-      value: {fileID: 1109957155, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
+      value: {fileID: 21300000, guid: f1ad64b7a3d2cf843944218ea564c8ee, type: 2}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -505832463, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
-    - {fileID: 1109957155, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
+    - {fileID: 21300000, guid: 156fc8a8d4f1a254ead3af65c6aa3a6a, type: 2}
+    - {fileID: 21300000, guid: f1ad64b7a3d2cf843944218ea564c8ee, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

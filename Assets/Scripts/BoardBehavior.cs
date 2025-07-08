@@ -2,56 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
+
 public class BoardBehavior : MonoBehaviour
 {
-    private Animator animator;
-    private bool isOpen = false;
-    private static InteractiveManager sManager;
+    public SpriteRenderer spriteRenderer;
+    public Sprite spriteOpened;
+    public Sprite spriteClosed;
+    public Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
-    [SerializeField]
-    private Cainos.PixelArtPlatformer_Dungeon.Door door = null;
+    private Animator Animator
+    {
+        get
+        {
+            if (animator == null ) animator = GetComponent<Animator>();
+            return animator;
+        }
+    }
+    private Animator animator;
+
+    public bool IsOpened
+    {
+        get { return isOpened; }
+        set
+        {
+            isOpened = value;
+
+            #if UNITY_EDITOR
+            if (Application.isPlaying == false)
+            {
+                EditorUtility.SetDirty(this);
+                EditorSceneManager.MarkSceneDirty(gameObject.scene);
+            }
+            #endif
+
+
+            if (Application.isPlaying)
+            {
+                Animator.SetBool("IsOpened", isOpened);
+            }
+            else
+            {
+                if(spriteRenderer) spriteRenderer.sprite = isOpened ? spriteOpened : spriteClosed;
+            }
+        }
+    }
+    [SerializeField,HideInInspector]
+    private bool isOpened;
 
     public void TriggerDoor() {
-        if (isOpen && door != null) {
-            Debug.Log("Open the door");
+        if (IsOpened && door != null) {
+            Debug.Log("Switch: Open the door");
             door.SetDoor(true);
         }
-        else if (!isOpen && door != null) {
-            Debug.Log("Close the door");
+        else if (!IsOpened && door != null) {
+            Debug.Log("Switch: Close the door");
             door.SetDoor(false);
         }
     }
-    public static void InitializeBoardSystem(InteractiveManager I)
-    {
-        // This method can be used to initialize the board system if needed
-        // For now, it does nothing but can be expanded later
-        sManager = I;
-    }
+
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        animator.SetBool("isOpen", isOpen);
-        TriggerDoor();
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Player")
-        {
-            Debug.Log("Open the door");
-            isOpen = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Player")
-            isOpen = false;
+        Animator.Play(isOpened ? "Opened" : "Closed");
+        IsOpened = isOpened;
     }
 }

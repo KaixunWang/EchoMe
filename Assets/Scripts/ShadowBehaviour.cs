@@ -13,6 +13,10 @@ public class ShadowBehaviour : MonoBehaviour
     private float moveInput = 0f;
     private float shadowDuration = 10f; // 影子持续时间10秒
     private BeaconBehaviour beaconBehaviour = null;
+
+    private bool isNearSwitch = false;
+    private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
+    private BoxesBehavior boxes = null;
     
     private int currentFrame = 0;
     private List<bool[]> input;
@@ -73,6 +77,10 @@ public class ShadowBehaviour : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.G)){ //立刻销毁shadow
             inputState[4] = true; // G键按下
         }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            inputState[3] = true; // E键按下
+        }
         
         currentFrame++;
     }
@@ -120,6 +128,11 @@ public class ShadowBehaviour : MonoBehaviour
             Debug.Log("Shadow destroyed by G key");
             Destroy(gameObject);
         }
+        if (Input.GetKeyDown(KeyCode.E) && isNearSwitch &&switchObject != null)
+        {
+            Debug.Log("E pressed near switch");
+            switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+        }
         
     }
 
@@ -164,4 +177,71 @@ public class ShadowBehaviour : MonoBehaviour
         input=p.getInput();
         input.Clear();
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+        if (collision.gameObject.name == "Boxes")
+        {
+            boxes = collision.gameObject.GetComponent<BoxesBehavior>();
+            Debug.Log("Collided with Boxes");
+            boxes.SetSpeed(moveSpeed); // 设置盒子的移动速度
+            if (collision.contacts[0].normal.x > 0)
+            {
+                Debug.Log("Collision on right side, pushing left");
+                // 如果碰撞发生在右侧，向左推动
+                boxes.PushLeft();
+            }
+            else if (collision.contacts[0].normal.x < 0)
+            {
+                Debug.Log("Collision on left side, pushing right");
+                // 如果碰撞发生在左侧，向右推动
+                boxes.PushRight();
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is near Switch");
+            isNearSwitch = true;
+            switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
+        }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = true; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is out Switch");
+            isNearSwitch = false;
+            if (switchObject != null)
+            {
+                switchObject = null; // 清除引用
+            }
+        }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = false; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
+    }
+
 }
