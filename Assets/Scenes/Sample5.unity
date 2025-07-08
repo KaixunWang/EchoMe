@@ -10579,9 +10579,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1169731580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -152.2, y: 359}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 535, y: 601}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1741242476
@@ -10606,7 +10606,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Accurate action record:
 
-'
+    Able to record your precise moves, then replay
+    them.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10782,11 +10783,19 @@ CompositeCollider2D:
         Y: 0
       - X: 80000000
         Y: 0
+    - - X: 110000000
+        Y: 10000000
+      - X: 100000000
+        Y: 10000000
+      - X: 100000000
+        Y: 0
+      - X: 110000000
+        Y: 0
     - - X: 190000000
         Y: 10000000
-      - X: 110000000
+      - X: 120000000
         Y: 10000000
-      - X: 110000000
+      - X: 120000000
         Y: 0
       - X: 190000000
         Y: 0
@@ -10810,8 +10819,12 @@ CompositeCollider2D:
     m_Paths:
     - - {x: 18.999971, y: 0}
       - {x: 18.999971, y: 1}
-      - {x: 11, y: 0.99997073}
-      - {x: 11.00003, y: 0}
+      - {x: 12, y: 0.99997073}
+      - {x: 12.00003, y: 0}
+    - - {x: 10.99997, y: 0}
+      - {x: 10.99997, y: 1}
+      - {x: 10, y: 0.99997073}
+      - {x: 10.00003, y: 0}
     - - {x: 7.9999704, y: 0}
       - {x: 7.9999704, y: 1}
       - {x: 7, y: 0.99997073}
@@ -11087,7 +11100,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 11, y: 0, z: 0}
+  - first: {x: 10, y: 0, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 9
