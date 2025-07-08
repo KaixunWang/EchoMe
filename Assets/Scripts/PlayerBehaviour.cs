@@ -19,7 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
     private BoxesBehavior boxes = null;
     private bool isInputEnabled = true;
-    private Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
+    private bool isInDoor = false; // 是否在门内
+    public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
 
     public bool getState()
     {
@@ -124,6 +125,13 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("R pressed to summon echo");
             SummonEcho();
         }
+
+        if (isInDoor && Exit != null && Exit.IsOpened)
+        {
+            Debug.Log("Player is in door and exit is opened");
+            isInputEnabled = false; // 禁用输入
+            StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
+        }
     }
     public void MoveLeft()
     {
@@ -220,21 +228,22 @@ public class PlayerBehaviour : MonoBehaviour
             switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
         }
 
-        // if (other.gameObject.name == "Board")
-        // {
-        //     Debug.Log("Player is near Board");
-        //     BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
-        //     board.IsOpened = true; // 切换门的开关状态
-        //     if (board != null)
-        //     {
-        //         board.TriggerDoor(); // 触发门的开关
-        //     }
-        // }
-
-        if (other.gameObject.name == "Door" )
+        if (other.gameObject.name == "Board")
         {
-            Exit = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>();
-            if (Exit != null && Exit.IsOpened)
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = true; // 切换门的开关状态
+            Debug.Log("Board is opened: " + board.IsOpened);
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
+        
+        if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
+
+        {
+            if (Exit.IsOpened)
             {
                 isInputEnabled = false; // 禁用输入
                 Debug.Log("Exit door is opened, player will go out");
@@ -242,6 +251,14 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
+        {
+            isInDoor = true; // 标记玩家在门内
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -321,7 +338,7 @@ public class PlayerBehaviour : MonoBehaviour
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
         
-        SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
+        //SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
     }
 
     public bool CheckGrounded()
