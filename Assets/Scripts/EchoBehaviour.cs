@@ -18,6 +18,11 @@ public class EchoBehaviour : MonoBehaviour
     private bool lastGInput = false;
     private float echoDuration = 10f;
     // Start is called before the first frame update
+
+    private bool isNearSwitch = false;
+    private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
+    private BoxesBehavior boxes = null;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -134,7 +139,7 @@ public class EchoBehaviour : MonoBehaviour
     private void Interact()
     {
         //开关
-
+        switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
     }
 
     IEnumerator DestroyAfterTime()
@@ -142,5 +147,71 @@ public class EchoBehaviour : MonoBehaviour
         yield return new WaitForSeconds(echoDuration);
         beaconBehaviour.SetHasEcho(false);
         Destroy(gameObject);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+        if (collision.gameObject.name == "Boxes")
+        {
+            boxes = collision.gameObject.GetComponent<BoxesBehavior>();
+            Debug.Log("Collided with Boxes");
+            boxes.SetSpeed(moveSpeed); // 设置盒子的移动速度
+            if (collision.contacts[0].normal.x > 0)
+            {
+                Debug.Log("Collision on right side, pushing left");
+                // 如果碰撞发生在右侧，向左推动
+                boxes.PushLeft();
+            }
+            else if (collision.contacts[0].normal.x < 0)
+            {
+                Debug.Log("Collision on left side, pushing right");
+                // 如果碰撞发生在左侧，向右推动
+                boxes.PushRight();
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is near Switch");
+            isNearSwitch = true;
+            switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
+        }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = true; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Switch")
+        {
+            Debug.Log("Player is out Switch");
+            isNearSwitch = false;
+            if (switchObject != null)
+            {
+                switchObject = null; // 清除引用
+            }
+        }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = false; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
     }
 }

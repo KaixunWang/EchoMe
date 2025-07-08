@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8950c64133a56f94db22294ccfaa8a2f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7b91a6da3c748da4e883623a8ad8b232, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -61,7 +61,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isOpen
+    m_ConditionEvent: IsOpened
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5619140198119959179}
@@ -86,7 +86,7 @@ AnimatorController:
   m_Name: PressureBoard
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isOpen
+  - m_Name: IsOpened
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -114,7 +114,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isOpen
+    m_ConditionEvent: IsOpened
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6234799147956289914}
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: aa5fda74b2a15f042b61d0231544848d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1be977b7aa7276d49aed3d5e84c9706c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

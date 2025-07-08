@@ -211,6 +211,16 @@ public class PlayerBehaviour : MonoBehaviour
             isNearSwitch = true;
             switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
         }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = true; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -223,11 +233,21 @@ public class PlayerBehaviour : MonoBehaviour
         
         if (other.gameObject.name == "Switch")
         {
-            Debug.Log("Player is near Switch");
+            Debug.Log("Player is out Switch");
             isNearSwitch = false;
             if (switchObject != null)
             {
                 switchObject = null; // 清除引用
+            }
+        }
+        if (other.gameObject.name == "Board")
+        {
+            Debug.Log("Player is near Board");
+            BoardBehavior board = other.gameObject.GetComponent<BoardBehavior>();
+            board.IsOpened = false; // 切换门的开关状态
+            if (board != null)
+            {
+                board.TriggerDoor(); // 触发门的开关
             }
         }
     }
