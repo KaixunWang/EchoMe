@@ -19,7 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
     private BoxesBehavior boxes = null;
     private bool isInputEnabled = true;
-    private Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
+    private bool isInDoor = false; // 是否在门内
+    public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
 
     public bool getState()
     {
@@ -120,6 +121,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.Log("R pressed to summon echo");
             SummonEcho();
+        }
+
+        if (isInDoor && Exit != null && Exit.IsOpened)
+        {
+            Debug.Log("Player is in door and exit is opened");
+            isInputEnabled = false; // 禁用输入
+            StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
         }
     }
     public void MoveLeft()
@@ -227,15 +235,23 @@ public class PlayerBehaviour : MonoBehaviour
                 board.TriggerDoor(); // 触发门的开关
             }
         }
-        if (other.gameObject.name == "Door" )
+        
+        if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
         {
-            Exit = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>();
-            if (Exit != null && Exit.IsOpened)
+            if (Exit.IsOpened)
             {
                 isInputEnabled = false; // 禁用输入
                 Debug.Log("Exit door is opened, player will go out");
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
             }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
+        {
+            isInDoor = true; // 标记玩家在门内
         }
     }
 
@@ -316,7 +332,7 @@ public class PlayerBehaviour : MonoBehaviour
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
         
-        SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
+        //SceneManager.LoadScene("Scene2"); // 替换为实际的场景名称
     }
 
     public bool CheckGrounded()
