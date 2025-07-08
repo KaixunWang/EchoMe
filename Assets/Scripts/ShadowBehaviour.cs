@@ -172,6 +172,7 @@ using UnityEngine;
 // }
 public class ShadowBehaviour : MonoBehaviour
 {
+    public bool isPaused = false; // 新增：暂停状态标志
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private float jumpForce = 10f;
@@ -232,6 +233,7 @@ public class ShadowBehaviour : MonoBehaviour
     }
     void Update()
     {
+        if (isPaused) return; // 如果游戏暂停，直接返回
         isGrounded = CheckGrounded();
         if (isGrounded)
         {
@@ -247,6 +249,7 @@ public class ShadowBehaviour : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (isPaused) return; // 如果游戏暂停，直接返回
         // 使用固定的物理更新
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
@@ -285,6 +288,7 @@ public class ShadowBehaviour : MonoBehaviour
     
     void HandleInput()
     {
+        if (isPaused) return; // 如果游戏暂停，直接返回
         // 移动输入
         if (Input.GetKey(KeyCode.A))
         {
