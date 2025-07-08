@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ee70320ea2b1a49b755875123f589b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBehaviour: {fileID: 0}
   pausePanel: {fileID: 3250586005806571012}
 --- !u!1 &2533829036143430411
 GameObject:
@@ -246,7 +247,7 @@ RectTransform:
   m_GameObject: {fileID: 3250586005806571012}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6061948612266895512}

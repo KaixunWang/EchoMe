@@ -31,7 +31,12 @@ public class PauseMenuManager : MonoBehaviour
         Debug.Log("Game Paused");
         pausePanel.SetActive(true);
         if (playerBehaviour != null)
-            playerBehaviour.isPaused = true; // 设置 PlayerBehaviour 的暂停状态
+        {
+            playerBehaviour.isPaused = true;
+            ShadowBehaviour shadowBehaviour = FindObjectOfType<ShadowBehaviour>();
+            if (shadowBehaviour != null)
+                shadowBehaviour.isPaused = true; // 恢复影子状态   
+        }
         Time.timeScale = 0f; // 暂停游戏时间
         isPaused = true;
     }
@@ -44,7 +49,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         pausePanel.SetActive(false);
         if (playerBehaviour != null)
+        {
             playerBehaviour.isPaused = false;
+            ShadowBehaviour shadowBehaviour = FindObjectOfType<ShadowBehaviour>();
+            if (shadowBehaviour != null)
+                shadowBehaviour.isPaused = false; // 恢复影子状态  
+        }
+            
         Time.timeScale = 1f; // 恢复时间
         isPaused = false;
     }
