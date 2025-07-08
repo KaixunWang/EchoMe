@@ -69,11 +69,8 @@ public class SceneManagerScript : MonoBehaviour
         }
         foreach (var boxObj in boxes)
         {
-            var boxComponent = boxObj.GetComponent<BoxesBehavior>();
-            if (boxComponent != null)
-            {
-                currentState.boxPositions.Add(boxComponent.transform.position);
-            }
+            currentState.boxPositions.Add(boxObj.transform.position);
+            currentState.boxSpeed.Add(boxObj.GetComponent<Rigidbody2D>().velocity); // Assuming you want to save the speed of the box
         }
         isRecording = true;
         Debug.Log("Scene state saved");
@@ -107,13 +104,15 @@ public class SceneManagerScript : MonoBehaviour
                     doorComponent.IsOpened = currentState.doorStates[i];
                 }
             }
-            for(int i = 0; i < boxes.Count && i < currentState.boxPositions.Count; i++)
+            for (int i = 0; i < boxes.Count && i < currentState.boxPositions.Count; i++)
             {
-                var boxComponent = boxes[i].GetComponent<BoxesBehavior>();
-                if (boxComponent != null)
-                {
-                    boxComponent.transform.position = currentState.boxPositions[i];
-                }
+                boxes[i].transform.position = currentState.boxPositions[i];
+                boxes[i].GetComponent<Rigidbody2D>().velocity = currentState.boxSpeed[i]; // Restore box speed
+                // var boxComponent = boxes[i].GetComponent<BoxesBehavior>();
+                // if (boxComponent != null)
+                // {
+                //     boxComponent.transform.position = currentState.boxPositions[i];
+                // }
             }
             // Restore other states as needed
             isRecording = false;
