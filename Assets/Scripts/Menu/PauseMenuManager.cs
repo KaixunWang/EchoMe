@@ -21,7 +21,6 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (isPaused)
                 ResumeGame();
-
             else
                 PauseGame();
         }
