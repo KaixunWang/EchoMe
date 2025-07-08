@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4252102077086372520}
   - component: {fileID: 69570654512091898}
   - component: {fileID: 7769803175563642706}
-  - component: {fileID: -2680223531209304453}
+  - component: {fileID: 7582395544650021149}
   m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
@@ -118,8 +118,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -256712047
+  m_SortingLayer: 4
   m_SortingOrder: 3
   m_Sprite: {fileID: 1891974999, guid: aaed16f88ab3711498c295a41a3fe5d0, type: 3}
   m_Color: {r: 0.5471698, g: 0.25500175, b: 0.25500175, a: 1}
@@ -153,7 +153,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &-2680223531209304453
+--- !u!61 &7582395544650021149
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,7 +196,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-
-  m_Size: {x: 0.21, y: 0.5}
-
+  m_Size: {x: 0.2, y: 0.5}
   m_EdgeRadius: 0.1
