@@ -139,7 +139,10 @@ public class EchoBehaviour : MonoBehaviour
     private void Interact()
     {
         //开关
-        switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+        if (switchObject != null)
+        {
+            switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+        }
     }
 
     IEnumerator DestroyAfterTime()
