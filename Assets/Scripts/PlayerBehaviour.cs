@@ -73,13 +73,13 @@ public class PlayerBehaviour : MonoBehaviour
                 transform.localScale = new Vector3(-3, 3, 1);
                 moveInput = -1f;
             }
-            else if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(3, 3, 1);
                 moveInput = 1f;
             }
-            else
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", false);
                 moveInput = 0f;
@@ -133,6 +133,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        Debug.Log("Player jumped at position: " + transform.position);
+        Debug.Log("Player jump force applied: " + jumpForce);
     }
     public void Interact(){
 
@@ -252,7 +254,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    // 新增：设置moveInput的public方法
+    //新增：设置moveInput的public方法
     public void SetMoveInput(float input)
     {
 

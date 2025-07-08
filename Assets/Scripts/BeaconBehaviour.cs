@@ -4,7 +4,7 @@
 
     public class BeaconBehaviour : MonoBehaviour
     {
-        private List<bool[]> memorizedInput=new List<bool[]>();
+        private List<TimeBasedInputEvent> memorizedInput=new List<TimeBasedInputEvent>();
         private bool hasEcho=false;
         // Start is called before the first frame update
         void Start()
@@ -65,8 +65,8 @@
 
             // 实例化 Echo
             GameObject echo = Instantiate(echoPrefab, nearBeaconPosition, Quaternion.identity);
-            echo.GetComponent<EchoBehaviour>().simulatedInputs=memorizedInput;
-            echo.GetComponent<EchoBehaviour>().beaconBehaviour=this;
+            echo.GetComponent<EchoBehaviour>().SetInputEvents(memorizedInput);
+            echo.GetComponent<EchoBehaviour>().SetBeaconBehaviour(this);
             hasEcho=true;
             if (echo == null)
             {
@@ -83,7 +83,7 @@
             
         }
 
-        public List<bool[]> getInput(){
+        public List<TimeBasedInputEvent> getInput(){
             return memorizedInput;
         }
 
