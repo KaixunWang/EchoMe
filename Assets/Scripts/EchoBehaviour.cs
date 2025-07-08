@@ -65,6 +65,8 @@ public class EchoBehaviour : MonoBehaviour
         {
             animator.SetBool("IsJumping", true);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            Debug.Log("Echo jumped at position: " + transform.position);
+            Debug.Log("Echo jump force applied: " + jumpForce);
         }
 
         // 使用交互物品（E键keydown）

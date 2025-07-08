@@ -133,6 +133,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        Debug.Log("Player jumped at position: " + transform.position);
+        Debug.Log("Player jump force applied: " + jumpForce);
     }
     public void Interact(){
 
