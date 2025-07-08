@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4252102077086372520}
   - component: {fileID: 69570654512091898}
   - component: {fileID: 7769803175563642706}
-  - component: {fileID: 2610418379542181074}
+  - component: {fileID: -2680223531209304453}
   m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
@@ -49,6 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  animator: {fileID: 0}
+  jumpForce: 10
+  moveSpeed: 6
+  shadowDuration: 10
 --- !u!50 &4252102077086372520
 Rigidbody2D:
   serializedVersion: 4
@@ -149,7 +153,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &2610418379542181074
+--- !u!61 &-2680223531209304453
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,5 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.5}
+
+  m_Size: {x: 0.21, y: 0.5}
+
   m_EdgeRadius: 0.1
