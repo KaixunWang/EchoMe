@@ -330,6 +330,8 @@ public class ShadowBehaviour : MonoBehaviour
     {
         animator.SetBool("IsJumping", true);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        Debug.Log("Shadow jumped at position: " + transform.position);
+        Debug.Log("Shadow jump force applied: " + jumpForce);
     }
     
     void DestroyImmediate()

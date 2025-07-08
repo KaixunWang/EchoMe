@@ -245,6 +245,7 @@ public class EchoBehaviour : MonoBehaviour
     {
         switch (inputType)
         {
+
             case InputType.W:
                 if (isGrounded)
                 {
@@ -259,6 +260,7 @@ public class EchoBehaviour : MonoBehaviour
                 beaconBehaviour.SetHasEcho(false);
                 Destroy(gameObject);
                 break;
+
         }
     }
     
