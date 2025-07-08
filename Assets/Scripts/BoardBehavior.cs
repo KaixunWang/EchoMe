@@ -72,12 +72,12 @@ public class BoardBehavior : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        IsOpened = !IsOpened; // 切换门的开关状态
+        IsOpened = true;
         TriggerDoor(); // 触发门的开关
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        IsOpened = !IsOpened; // 切换门的开关状态
+        IsOpened = false; // 切换门的开关状态
         TriggerDoor(); // 触发门的开关
     }
     public bool GetBoardState()
