@@ -358,7 +358,7 @@ public class ShadowBehaviour : MonoBehaviour
     {
         //3raycast
         Collider2D col = GetComponent<Collider2D>();
-        float colliderWidth = 0.8f;
+        float colliderWidth = 0.7f;
         float colliderHeight = 0.5f;
         Vector3 basePos = col.bounds.center + Vector3.down * (colliderHeight / 2f - 0.01f);
         Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
