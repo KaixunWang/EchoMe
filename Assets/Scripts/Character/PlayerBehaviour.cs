@@ -22,6 +22,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isInputEnabled = true;
     private bool isInDoor = false; // 是否在门内
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
+    private bool win = false; // 是否赢得游戏
 
     public bool getState()
     {
@@ -258,6 +259,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (Exit.IsOpened)
             {
+                win = true; // 设置赢得游戏的状态
                 isInputEnabled = false; // 禁用输入
                 Debug.Log("Exit door is opened, player will go out");
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
@@ -388,6 +390,10 @@ public class PlayerBehaviour : MonoBehaviour
                Physics2D.Raycast(left, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
                Physics2D.Raycast(right, Vector2.down, groundCheckDistance, itemCanJumpLayer);
+    }
+    public bool IsWin()
+    {
+        return win; // 返回是否赢得游戏的状态
     }
     public void TakeDamage(string source)
     {
