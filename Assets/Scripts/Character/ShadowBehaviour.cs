@@ -215,7 +215,8 @@ public class ShadowBehaviour : MonoBehaviour
     IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(shadowDuration);
-        
+        float currentTime = Time.time - recordStartTime;
+        beaconBehaviour.SetEchoTime(currentTime);
         // 查找player并通知它回到正常状态
         GameObject player = GameObject.Find("Player");
 
