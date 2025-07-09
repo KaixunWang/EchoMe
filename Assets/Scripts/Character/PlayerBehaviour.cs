@@ -219,6 +219,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 10; // 禁用重力
+            Debug.Log("Player entered MovingPlatform");
+        }
         if (other.gameObject.name == "Beacon")
         {
 
@@ -270,6 +276,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 3.5f; // 恢复重力
+            Debug.Log("Player exited MovingPlatform");
+        }
         if (other.gameObject.name == "Beacon")
         {
             isNearBeacon = false;
