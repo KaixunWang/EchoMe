@@ -10,7 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
-    private float jumpForce = 15;
+    private float jumpForce = 13f;
     private Animator animator;
     private float moveSpeed = 6;
 
