@@ -10,7 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
-    private float jumpForce = 10;
+    private float jumpForce = 15;
     private Animator animator;
     private float moveSpeed = 6;
 
@@ -380,7 +380,11 @@ public class PlayerBehaviour : MonoBehaviour
     public void TakeDamage(string source)
     {
         Debug.Log("Player took damage from " + source);
-        Scene current = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(current.name);
+        Restart();
+    }
+    public void Restart()
+    {
+        Debug.Log("Restarting scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 重新加载当前场景
     }
 }
