@@ -16,12 +16,24 @@ public class SpikeBehavioudr : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name== "Player") 
+        if (other.name == "Player")
         {
             Debug.Log("Player hit the spike!");
             // 示例调用：玩家掉血
             other.GetComponent<PlayerBehaviour>().TakeDamage("Spike");
-            
+
+        }
+        if (other.name == "Shadow(Clone)")
+        {
+            Debug.Log("Shadow hit the spike!");
+            // 示例调用：影子掉血
+            other.GetComponent<ShadowBehaviour>().DestroybyTrap();
+        }
+        if (other.name == "Echo(Clone)")
+        {
+            Debug.Log("Echo hit the spike!");
+            // 示例调用：回声掉血
+            other.GetComponent<EchoBehaviour>().DestroyImmediate();
         }
     }
 }

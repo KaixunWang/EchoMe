@@ -170,7 +170,7 @@ public class EchoBehaviour : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
+
         // 初始化输入状态
         currentInputStates = new Dictionary<InputType, bool>
         {
@@ -180,11 +180,18 @@ public class EchoBehaviour : MonoBehaviour
             {InputType.E, false},
             {InputType.G, false}
         };
-        
+
         replayStartTime = Time.time;
+
+        // 确保BeaconBehaviour已设置
+        if (beaconBehaviour != null)
+        {
+            echoDuration = beaconBehaviour.GetEchoTime(); // 从BeaconBehaviour获取回声持续时间
+        }
+
         StartCoroutine(DestroyAfterTime());
     }
-    
+
     void Update()
     {
         isGrounded = CheckGrounded();
@@ -192,12 +199,17 @@ public class EchoBehaviour : MonoBehaviour
         {
             animator.SetBool("IsJumping", false);
         }
-        
+
         // 处理基于时间的输入重播
         ProcessTimeBasedInput();
-        
+        // if (currentEventIndex >= inputEvents.Count)
+        // {
+        //     beaconBehaviour.SetHasEcho(false);
+        //         Destroy(gameObject);
+        // }
         // 根据当前输入状态执行动作
         ExecuteCurrentInputs();
+        
     }
     
     void FixedUpdate()
@@ -333,7 +345,11 @@ public class EchoBehaviour : MonoBehaviour
         beaconBehaviour.SetHasEcho(false);
         Destroy(gameObject);
     }
-
+    public void DestroyImmediate()
+    {
+        beaconBehaviour.SetHasEcho(false);
+        Destroy(gameObject);
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
        
