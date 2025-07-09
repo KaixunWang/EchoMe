@@ -151,7 +151,7 @@ public class EchoBehaviour : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 6f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 13f;
     [SerializeField] private float echoDuration = 10f;
     
     private List<TimeBasedInputEvent> inputEvents;
