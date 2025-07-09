@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,7 +39,8 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void SwitchShadow()
     {
-        if(beaconBehaviour.HasEcho()){
+        if (beaconBehaviour.HasEcho())
+        {
             return;
         }
         Debug.Log("Switching shadow");
@@ -70,7 +72,8 @@ public class PlayerBehaviour : MonoBehaviour
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
         isGrounded = CheckGrounded();
-        if(isGrounded){
+        if (isGrounded)
+        {
             animator.SetBool("IsJumping", false);
         }
         if (!isShadow)
@@ -95,7 +98,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
             // 只有在非影子状态下才允许跳跃
-            if (isInputEnabled &&Input.GetKeyDown(KeyCode.W) && isGrounded)
+            if (isInputEnabled && Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
                 Debug.Log("Jump");
                 Jump();
@@ -116,7 +119,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
 
-        if (isInputEnabled && Input.GetKeyDown(KeyCode.E) && isNearSwitch &&switchObject != null)
+        if (isInputEnabled && Input.GetKeyDown(KeyCode.E) && isNearSwitch && switchObject != null)
         {
             Debug.Log("E pressed near switch");
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
@@ -152,10 +155,12 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Player jumped at position: " + transform.position);
         Debug.Log("Player jump force applied: " + jumpForce);
     }
-    public void Interact(){
+    public void Interact()
+    {
 
     }
-    public void SummonEcho(){
+    public void SummonEcho()
+    {
         beaconBehaviour.SwitchPlayer(nearBeaconPosition);
     }
 
@@ -190,7 +195,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-       
+
         if (collision.gameObject.name == "Boxes")
         {
             boxes = collision.gameObject.GetComponent<BoxesBehavior>();
@@ -216,13 +221,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.name == "Beacon")
         {
-            
+
             Debug.Log("Beacon Updated");
             isNearBeacon = true;
             nearBeaconPosition = other.gameObject.transform.position;
             beaconBehaviour = other.gameObject.GetComponent<BeaconBehaviour>();
         }
-        
+
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is near Switch");
@@ -241,7 +246,7 @@ public class PlayerBehaviour : MonoBehaviour
                 board.TriggerDoor(); // 触发门的开关
             }
         }
-        
+
         if (Exit != null && other.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>() == Exit)
 
         {
@@ -270,7 +275,7 @@ public class PlayerBehaviour : MonoBehaviour
             isNearBeacon = false;
             nearBeaconPosition = Vector3.zero;
         }
-        
+
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is out Switch");
@@ -309,7 +314,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         return isNearBeacon;
     }
-    
+
     IEnumerator GoOutCoroutine()
     {
         bool isRight = Exit.transform.position.x > transform.position.x;
@@ -344,7 +349,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
-        
+
         SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
 
@@ -371,5 +376,11 @@ public class PlayerBehaviour : MonoBehaviour
                Physics2D.Raycast(left, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
                Physics2D.Raycast(center, Vector2.down, groundCheckDistance, itemCanJumpLayer) ||
                Physics2D.Raycast(right, Vector2.down, groundCheckDistance, itemCanJumpLayer);
+    }
+    public void TakeDamage(string source)
+    {
+        Debug.Log("Player took damage from " + source);
+        Scene current = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(current.name);
     }
 }
