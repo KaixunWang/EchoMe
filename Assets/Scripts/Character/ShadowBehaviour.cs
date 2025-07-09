@@ -175,7 +175,7 @@ public class ShadowBehaviour : MonoBehaviour
     public bool isPaused = false; // 新增：暂停状态标志
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 13f;
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
     
@@ -340,6 +340,8 @@ public class ShadowBehaviour : MonoBehaviour
     
     void DestroyImmediate()
     {
+        float currentTime = Time.time - recordStartTime;
+        beaconBehaviour.SetEchoTime(currentTime);
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
@@ -358,7 +360,7 @@ public class ShadowBehaviour : MonoBehaviour
     {
         //3raycast
         Collider2D col = GetComponent<Collider2D>();
-        float colliderWidth = 0.8f;
+        float colliderWidth = 0.7f;
         float colliderHeight = 0.5f;
         Vector3 basePos = col.bounds.center + Vector3.down * (colliderHeight / 2f - 0.01f);
         Vector3 left = basePos + Vector3.left * (colliderWidth / 2f - 0.05f);
@@ -451,5 +453,10 @@ public class ShadowBehaviour : MonoBehaviour
         //     }
         // }
     }
-
+    public void DestroybyTrap()
+    {
+        float currentTime = Time.time - recordStartTime;
+        Debug.Log("Shadow destroyed by trap at time: " + currentTime);
+        DestroyImmediate();
+    }
 }
