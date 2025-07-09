@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
-    private float jumpForce = 10;
+    private float jumpForce = 13f;
     private Animator animator;
     private float moveSpeed = 6;
 
@@ -219,6 +220,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 10; // 禁用重力
+            Debug.Log("Player entered MovingPlatform");
+        }
         if (other.gameObject.name == "Beacon")
         {
 
@@ -271,6 +278,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 3.5f; // 恢复重力
+            Debug.Log("Player exited MovingPlatform");
+        }
         if (other.gameObject.name == "Beacon")
         {
             isNearBeacon = false;
@@ -381,5 +394,15 @@ public class PlayerBehaviour : MonoBehaviour
     public bool IsWin()
     {
         return win; // 返回是否赢得游戏的状态
+    }
+    public void TakeDamage(string source)
+    {
+        Debug.Log("Player took damage from " + source);
+        Restart();
+    }
+    public void Restart()
+    {
+        Debug.Log("Restarting scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 重新加载当前场景
     }
 }

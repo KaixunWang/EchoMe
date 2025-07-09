@@ -151,7 +151,7 @@ public class EchoBehaviour : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 6f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 13f;
     [SerializeField] private float echoDuration = 10f;
     
     private List<TimeBasedInputEvent> inputEvents;
@@ -170,7 +170,7 @@ public class EchoBehaviour : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
+
         // 初始化输入状态
         currentInputStates = new Dictionary<InputType, bool>
         {
@@ -180,11 +180,18 @@ public class EchoBehaviour : MonoBehaviour
             {InputType.E, false},
             {InputType.G, false}
         };
-        
+
         replayStartTime = Time.time;
+
+        // 确保BeaconBehaviour已设置
+        if (beaconBehaviour != null)
+        {
+            echoDuration = beaconBehaviour.GetEchoTime(); // 从BeaconBehaviour获取回声持续时间
+        }
+
         StartCoroutine(DestroyAfterTime());
     }
-    
+
     void Update()
     {
         isGrounded = CheckGrounded();
@@ -192,12 +199,17 @@ public class EchoBehaviour : MonoBehaviour
         {
             animator.SetBool("IsJumping", false);
         }
-        
+
         // 处理基于时间的输入重播
         ProcessTimeBasedInput();
-        
+        // if (currentEventIndex >= inputEvents.Count)
+        // {
+        //     beaconBehaviour.SetHasEcho(false);
+        //         Destroy(gameObject);
+        // }
         // 根据当前输入状态执行动作
         ExecuteCurrentInputs();
+        
     }
     
     void FixedUpdate()
@@ -333,7 +345,11 @@ public class EchoBehaviour : MonoBehaviour
         beaconBehaviour.SetHasEcho(false);
         Destroy(gameObject);
     }
-
+    public void DestroyImmediate()
+    {
+        beaconBehaviour.SetHasEcho(false);
+        Destroy(gameObject);
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
        
@@ -359,6 +375,12 @@ public class EchoBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 0f; // 禁用重力
+            Debug.Log("Player entered MovingPlatform");
+        }
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is near Switch");
@@ -379,6 +401,12 @@ public class EchoBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 3.5f; // 恢复重力
+            Debug.Log("Player exited MovingPlatform");
+        }
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is out Switch");

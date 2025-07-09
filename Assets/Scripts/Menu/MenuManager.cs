@@ -20,6 +20,10 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Load Sample 1");
         SceneManager.LoadScene(levelName);
     }
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("LevelSelectScene");
+    }
     // 返回主菜单（可用于暂停菜单中）
     public void ReturnToMainMenu()
     {

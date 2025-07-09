@@ -175,7 +175,7 @@ public class ShadowBehaviour : MonoBehaviour
     public bool isPaused = false; // 新增：暂停状态标志
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 13f;
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
     
@@ -215,7 +215,8 @@ public class ShadowBehaviour : MonoBehaviour
     IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(shadowDuration);
-        
+        float currentTime = Time.time - recordStartTime;
+        beaconBehaviour.SetEchoTime(currentTime);
         // 查找player并通知它回到正常状态
         GameObject player = GameObject.Find("Player");
 
@@ -340,6 +341,8 @@ public class ShadowBehaviour : MonoBehaviour
     
     void DestroyImmediate()
     {
+        float currentTime = Time.time - recordStartTime;
+        beaconBehaviour.SetEchoTime(currentTime);
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
@@ -411,6 +414,12 @@ public class ShadowBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 0f; // 禁用重力
+            Debug.Log("Player entered MovingPlatform");
+        }
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is near Switch");
@@ -431,6 +440,12 @@ public class ShadowBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.SetParent(null); // 设置玩家为移动平台的子物体
+            rb.gravityScale = 3.5f; // 恢复重力
+            Debug.Log("Player exited MovingPlatform");
+        }
         if (other.gameObject.name == "Switch")
         {
             Debug.Log("Player is out Switch");
@@ -451,5 +466,10 @@ public class ShadowBehaviour : MonoBehaviour
         //     }
         // }
     }
-
+    public void DestroybyTrap()
+    {
+        float currentTime = Time.time - recordStartTime;
+        Debug.Log("Shadow destroyed by trap at time: " + currentTime);
+        DestroyImmediate();
+    }
 }
