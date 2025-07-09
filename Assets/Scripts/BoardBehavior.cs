@@ -74,6 +74,7 @@ public class BoardBehavior : MonoBehaviour
     {
         IsOpened = true;
         TriggerDoor(); // 触发门的开关
+        //gogogo
     }
     void OnTriggerExit2D(Collider2D other)
     {
