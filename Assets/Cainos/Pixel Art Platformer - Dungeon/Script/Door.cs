@@ -63,6 +63,13 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             IsOpened = state;
         }
 
+        public void SetGate(bool state)
+        {
+            Collider2D targetCollider = GetComponent<Collider2D>();
+            if (targetCollider != null)
+                targetCollider.isTrigger = state; // 设置为触发器或非触发器
+        }
+
         private void Start()
         {
             Animator.Play(isOpened ? "Opened" : "Closed");

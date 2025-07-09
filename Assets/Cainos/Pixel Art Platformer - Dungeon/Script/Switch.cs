@@ -17,7 +17,6 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public SpriteRenderer spriteRenderer;
         [FoldoutGroup("Reference")] public Sprite spriteOn;
         [FoldoutGroup("Reference")] public Sprite spriteOff;
-        [FoldoutGroup("Reference")] public Cainos.PixelArtPlatformer_Dungeon.Door door = null;
 
         [FoldoutGroup("Settings")] public float autoCloseDelay = 3f; // 自动关闭延迟时间
 
@@ -39,16 +38,32 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         }
 
         public void TriggerDoor() {
-            if (IsOn && door != null) {
-                Debug.Log("Switch: Open the door");
-                door.SetDoor(true);
+            if (target.tag == "door"){
+                if (IsOn && target != null) {
+                    Debug.Log("Switch: Open the door");
+                    target.SetDoor(true);
+                }
+                else if (!IsOn && target != null) {
+                    Debug.Log("Switch: Close the door");
+                    target.SetDoor(false);
+                }
             }
-            else if (!IsOn && door != null) {
-                Debug.Log("Switch: Close the door");
-                door.SetDoor(false);
+            if (target.tag == "gate")
+            {
+                if (IsOn && target != null)
+                {
+                    Debug.Log("Switch: Open the gate");
+                    target.SetDoor(true); // 确保门关闭状态
+                    target.SetGate(true);
+                }
+                else if (!IsOn && target != null)
+                {
+                    Debug.Log("Switch: Close the gate");
+                    target.SetDoor(false); // 确保门关闭状态
+                    target.SetGate(false);
+                }
             }
         }
-
         void Update()
         {
             Animator.SetBool("IsOn", isOn);
