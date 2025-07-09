@@ -18,7 +18,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public Sprite spriteOn;
         [FoldoutGroup("Reference")] public Sprite spriteOff;
 
-        [FoldoutGroup("Settings")] public float autoCloseDelay = 3f; // 自动关闭延迟时间
+        [FoldoutGroup("Settings")] public float autoCloseDelay = 1.5f; // 自动关闭延迟时间
 
         private Animator Animator
         {
