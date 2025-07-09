@@ -7,6 +7,10 @@ public class SceneManagerScript : MonoBehaviour
     private SceneState currentState;
     private bool isRecording = false;
     public GameObject player;
+    public GameObject clock;
+    public GameObject win;
+    public GameObject lose;
+    public GameObject coinSystem; // Reference to the CoinSystemScript
     public List<GameObject> switches; // List of switch GameObjects
     public List<GameObject> pressurePlates; // List of pressure plate GameObjects
     public List<GameObject> doors; // List of door GameObjects
@@ -15,6 +19,12 @@ public class SceneManagerScript : MonoBehaviour
     void Start()
     {
         Debug.Assert(player != null, "Player GameObject is not assigned in the SceneManagerScript.");
+        Debug.Assert(clock != null, "Clock GameObject is not assigned in the SceneManagerScript.");
+        Debug.Assert(win != null, "Win GameObject is not assigned in the SceneManagerScript.");
+        Debug.Assert(lose != null, "Lose GameObject is not assigned in the SceneManagerScript.");
+        Debug.Assert(coinSystem != null, "CoinSystemScript GameObject is not assigned in the SceneManagerScript.");
+        win.SetActive(false);
+        lose.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,6 +38,23 @@ public class SceneManagerScript : MonoBehaviour
         if (!(playerBehaviour.getState()) && isRecording)
         {
             LoadState();
+        }
+        if(playerBehaviour.IsWin())
+        {
+            win.SetActive(true);
+            int score = 1;
+            if(clock.GetComponent<TimerBehavior>().GetElapsedTime() < 60)
+            {
+                score ++;
+            }
+            if (coinSystem.GetComponent<CoinSystemScript>().GetCoinCount() == 3)
+            {
+                score++; 
+            }
+            win.GetComponent<WinScript>().SetStars(score);
+            clock.SetActive(false);
+            player.SetActive(false);
+            Debug.Log("You Win!");
         }
     }
 
