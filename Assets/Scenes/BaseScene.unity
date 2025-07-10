@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &318495451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5428338766810797316, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+  m_PrefabInstance: {fileID: 509814831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &363130572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10821,18 +10826,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 749695954}
-    - target: {fileID: 2071808408937008394, guid: a8c889116495da54397835781b005aba, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReturnToLevelSelect
-      objectReference: {fileID: 0}
     - target: {fileID: 2152364206274318664, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 749695954}
-    - target: {fileID: 2152364206274318664, guid: a8c889116495da54397835781b005aba, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartGame
-      objectReference: {fileID: 0}
     - target: {fileID: 8735341808391543837, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_Name
       value: Summary_win
@@ -11836,7 +11833,7 @@ MonoBehaviour:
   clock: {fileID: 1161499463}
   win: {fileID: 768368654}
   lose: {fileID: 1802436517}
-  coinSystem: {fileID: 5428338766810797316, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+  coinSystem: {fileID: 318495451}
   switches: []
   pressurePlates:
   - {fileID: 1012974690}
