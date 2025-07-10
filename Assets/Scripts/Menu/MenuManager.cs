@@ -15,11 +15,6 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Quit Game");
         Application.Quit();
     }
-    public void IntoLevel(string levelName)
-    {
-        Debug.Log("Load Sample 1");
-        SceneManager.LoadScene(levelName);
-    }
     public void PlayGame()
     {
         SceneManager.LoadScene("LevelSelectScene");

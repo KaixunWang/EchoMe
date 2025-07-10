@@ -222,8 +222,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
-            rb.gravityScale = 10; // 禁用重力
+            rb.gravityScale = 10; // 黏住
             Debug.Log("Player entered MovingPlatform");
         }
         if (other.gameObject.name == "Beacon")
@@ -259,7 +258,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (Exit.IsOpened)
             {
-                win = true; // 设置赢得游戏的状态
+                // win = true; // 设置赢得游戏的状态
                 isInputEnabled = false; // 禁用输入
                 Debug.Log("Exit door is opened, player will go out");
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
@@ -280,7 +279,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            transform.SetParent(null); // 设置玩家为移动平台的子物体
             rb.gravityScale = 3.5f; // 恢复重力
             Debug.Log("Player exited MovingPlatform");
         }
@@ -363,8 +361,9 @@ public class PlayerBehaviour : MonoBehaviour
 
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
+        win = true; // 设置赢得游戏的状态
 
-        SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
+        // SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
 
     public bool CheckGrounded()
