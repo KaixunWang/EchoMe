@@ -48,9 +48,9 @@ public class TimerBehavior : MonoBehaviour
         }
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-    public float GetElapsedTime()
+    public int GetElapsedTime()
     {
-        return elapsedTime;
+        return Mathf.FloorToInt(elapsedTime);
     }
     public void SetTimer(bool set)
     {
