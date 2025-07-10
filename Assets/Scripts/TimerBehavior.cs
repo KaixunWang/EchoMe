@@ -9,6 +9,8 @@ public class TimerBehavior : MonoBehaviour
     private float remainingTime = 10f;
     public GameObject player;
     private float elapsedTime = 0f;
+    private bool isRecording = true;
+    private int minutes, seconds;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,6 @@ public class TimerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int minutes, seconds;
         if (player.GetComponent<PlayerBehaviour>().getState())//isShadow
         {
             timerText.color = Color.red;
@@ -41,11 +42,18 @@ public class TimerBehavior : MonoBehaviour
             seconds = Mathf.FloorToInt(elapsedTime % 60);
             timerText.color = Color.white;
         }
-        elapsedTime += Time.deltaTime;
+        if (isRecording)
+        {
+            elapsedTime += Time.deltaTime;
+        }
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     public float GetElapsedTime()
     {
         return elapsedTime;
+    }
+    public void SetTimer(bool set)
+    {
+        isRecording = set;
     }
 }

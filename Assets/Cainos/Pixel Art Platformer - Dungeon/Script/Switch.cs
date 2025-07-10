@@ -19,7 +19,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public Sprite spriteOff;
 
         [FoldoutGroup("Settings")] public float autoCloseDelay = 1.5f; // 自动关闭延迟时间
-
+        public float remainingTime = 1.5f; // 保留的时间
         private Animator Animator
         {
             get
@@ -37,13 +37,17 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             IsOn = isOn;
         }
 
-        public void TriggerDoor() {
-            if (target.tag == "door"){
-                if (IsOn && target != null) {
+        public void TriggerDoor()
+        {
+            if (target.tag == "door")
+            {
+                if (IsOn && target != null)
+                {
                     Debug.Log("Switch: Open the door");
                     target.SetDoor(true);
                 }
-                else if (!IsOn && target != null) {
+                else if (!IsOn && target != null)
+                {
                     Debug.Log("Switch: Close the door");
                     target.SetDoor(false);
                 }
@@ -73,7 +77,15 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         // 自动关闭协程
         private IEnumerator AutoCloseCoroutine()
         {
-            yield return new WaitForSeconds(autoCloseDelay);
+            // yield return new WaitForSeconds(autoCloseDelay);
+            // float countdown = autoCloseDelay;
+            while (remainingTime > 0f)
+            {
+                // remainingTime = countdown; // 更新剩余时间
+                remainingTime -= Time.deltaTime; // 减少剩余时间
+                yield return null;
+            }
+            remainingTime = autoCloseDelay;
             IsOn = false;
             autoCloseCoroutine = null;
         }
@@ -87,20 +99,20 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                 bool previousState = isOn;
                 isOn = value;
 
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (Application.isPlaying == false)
                 {
                     EditorUtility.SetDirty(this);
                     EditorSceneManager.MarkSceneDirty(gameObject.scene);
                 }
-                #endif
+#endif
 
                 if (target) target.IsOpened = isOn;
 
-                if (Application.isPlaying )
+                if (Application.isPlaying)
                 {
                     Animator.SetBool("IsOn", isOn);
-                    
+
                     // 当开关从关闭变为开启时，启动自动关闭协程
                     if (!previousState && isOn)
                     {
@@ -109,7 +121,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                         {
                             StopCoroutine(autoCloseCoroutine);
                         }
-                        
+
                         // 启动新的自动关闭协程
                         autoCloseCoroutine = StartCoroutine(AutoCloseCoroutine());
                     }
@@ -125,7 +137,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                 }
                 else
                 {
-                    if (spriteRenderer) spriteRenderer.sprite = isOn ? spriteOn: spriteOff;
+                    if (spriteRenderer) spriteRenderer.sprite = isOn ? spriteOn : spriteOff;
                 }
             }
         }
@@ -142,6 +154,14 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         public void TurnOff()
         {
             IsOn = false;
+        }
+        public float GetRemainingTime()
+        {
+            return remainingTime;
+        }
+        public void SetRemainingTime(float time)
+        {
+            remainingTime = time;
         }
     }
 }

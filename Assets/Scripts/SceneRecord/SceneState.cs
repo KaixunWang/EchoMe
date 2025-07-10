@@ -7,6 +7,7 @@ public class SceneState
 {
     public Vector3 playerPosition;
     public List<bool> switchStates = new List<bool>();
+    public List<float> switchRemainingTimes = new List<float>();
     public List<bool> pressurePlateStates = new List<bool>();
     public List<bool> doorStates = new List<bool>();
     public List<Vector3> boxPositions = new List<Vector3>();

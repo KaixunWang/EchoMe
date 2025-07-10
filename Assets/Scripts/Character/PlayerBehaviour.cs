@@ -259,7 +259,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (Exit.IsOpened)
             {
-                win = true; // 设置赢得游戏的状态
+                // win = true; // 设置赢得游戏的状态
                 isInputEnabled = false; // 禁用输入
                 Debug.Log("Exit door is opened, player will go out");
                 StartCoroutine(GoOutCoroutine()); // 调用GoOut方法
@@ -363,8 +363,9 @@ public class PlayerBehaviour : MonoBehaviour
 
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
+        win = true; // 设置赢得游戏的状态
 
-        SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
+        // SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
 
     public bool CheckGrounded()
