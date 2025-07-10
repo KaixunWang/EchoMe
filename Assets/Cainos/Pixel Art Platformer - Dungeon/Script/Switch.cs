@@ -18,8 +18,8 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public Sprite spriteOn;
         [FoldoutGroup("Reference")] public Sprite spriteOff;
 
-        [FoldoutGroup("Settings")] public float autoCloseDelay = 5f; // 自动关闭延迟时间
-        private float remainingTime = 5f; // 保留的时间
+        [FoldoutGroup("Settings")] private float autoCloseDelay = 5f; // 自动关闭延迟时间
+        private float remainingTime = 0f; // 保留的时间
         private Animator Animator
         {
             get
@@ -85,7 +85,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                 remainingTime -= Time.deltaTime; // 减少剩余时间
                 yield return null;
             }
-            remainingTime = autoCloseDelay;
+            // remainingTime = autoCloseDelay;
             IsOn = false;
             autoCloseCoroutine = null;
         }
@@ -123,11 +123,13 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                         }
 
                         // 启动新的自动关闭协程
+                        remainingTime = autoCloseDelay; // 重置剩余时间
                         autoCloseCoroutine = StartCoroutine(AutoCloseCoroutine());
                     }
                     // 当开关关闭时，停止自动关闭协程
                     else if (previousState && !isOn)
                     {
+                        remainingTime = 0f; // 重置剩余时间
                         if (autoCloseCoroutine != null)
                         {
                             StopCoroutine(autoCloseCoroutine);

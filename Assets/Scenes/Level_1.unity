@@ -4570,7 +4570,7 @@ PrefabInstance:
       objectReference: {fileID: 1725795668}
     - target: {fileID: 5462017029474844879, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: autoCloseDelay
-      value: 1.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5760846579451053057, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: m_Name
