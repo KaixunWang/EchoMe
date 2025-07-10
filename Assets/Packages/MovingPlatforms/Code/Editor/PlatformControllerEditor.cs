@@ -161,7 +161,7 @@ namespace Bundos.MovingPlatforms
         {
             Undo.RecordObject(platformController, "Remove waypoint");
             platformController.waypoints.RemoveAt(selectionInfo.pointIndex);
-            selectionInfo.pointIndex = -1;
+            selectionInfo.pointIndex = 0;
             needsRepaint = true;
         }
 
@@ -189,7 +189,7 @@ namespace Bundos.MovingPlatforms
                 platformController.waypoints[selectionInfo.pointIndex] = mousePosition;
 
                 selectionInfo.pointIsSelected = false;
-                selectionInfo.pointIndex = -1;
+                selectionInfo.pointIndex = 0;
                 needsRepaint = true;
             }
         }
