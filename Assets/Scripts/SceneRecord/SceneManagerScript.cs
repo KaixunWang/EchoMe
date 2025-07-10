@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class SceneManagerScript : MonoBehaviour
     public GameObject coinSystem; // Reference to the CoinSystemScript
     public List<GameObject> switches; // List of switch GameObjects
     public List<GameObject> pressurePlates; // List of pressure plate GameObjects
+    public int levelGoodTime = 60;
     public List<GameObject> doors; // List of door GameObjects
     public List<GameObject> boxes; // List of box GameObjects
     private int score = 0;
@@ -43,20 +45,56 @@ public class SceneManagerScript : MonoBehaviour
         if (playerBehaviour.IsWin())
         {
             win.SetActive(true);
+            string message = "Finish Level!\n";
             score = 1;
-            if (clock.GetComponent<TimerBehavior>().GetElapsedTime() < 60)
-            {
-                score++;
-            }
+
             if (coinSystem.GetComponent<CoinSystemScript>().GetCoinCount() == 3)
             {
                 score++;
+                message += "Collect Coins:3/3\n";
+            } else {
+                message += "Collect Coins:" + coinSystem.GetComponent<CoinSystemScript>().GetCoinCount() + "/3\n";
+            }
+            if (clock.GetComponent<TimerBehavior>().GetElapsedTime() < levelGoodTime)
+            {
+                score++;
+                message += "Time: " + clock.GetComponent<TimerBehavior>().GetElapsedTime() + "/" + levelGoodTime + "s\n";
+            }
+            else
+            {
+                message += "Time: " + clock.GetComponent<TimerBehavior>().GetElapsedTime() + "/" + levelGoodTime + "s\n";
             }
             win.GetComponent<WinScript>().SetStars(score);
+            win.GetComponent<WinScript>().ShowWinPanel(message);
             clock.GetComponent<TimerBehavior>().SetTimer(false);
             // clock.SetActive(false);
             // player.SetActive(false);
             Debug.Log("You Win!");
+
+            // ----------- 新增：保存星星数到PlayerPrefs -----------
+            // 获取当前关卡编号
+            int currentLevelIndex = 0;
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            if (sceneName.StartsWith("Level_"))
+            {
+                int.TryParse(sceneName.Substring("Level_".Length), out currentLevelIndex);
+            }
+            // 只保存更高的星星数
+            int oldStars = PlayerPrefs.GetInt($"Level_{currentLevelIndex}_Stars", 0);
+            if (score > oldStars)
+            {
+                PlayerPrefs.SetInt($"Level_{currentLevelIndex}_Stars", score);
+                PlayerPrefs.Save();
+                Debug.Log($"保存关卡{currentLevelIndex}星星数: {score}");
+            }
+            // ---------------------------------------------
+        }else if (playerBehaviour.IsLose())
+        {
+            lose.SetActive(true);
+            clock.GetComponent<TimerBehavior>().SetTimer(false);
+            // clock.SetActive(false);
+            // player.SetActive(false);
+            Debug.Log("You Lose!");
         }
     }
 
@@ -121,6 +159,10 @@ public class SceneManagerScript : MonoBehaviour
                     {
                         switchComponent.SetRemainingTime(currentState.switchRemainingTimes[i]);
                     }
+                    // else
+                    // {
+                    //     switchComponent.SetRemainingTime(0f); // Reset remaining time if switch is off
+                    // }
                 }
             }
             for (int i = 0; i < pressurePlates.Count && i < currentState.pressurePlateStates.Count; i++)

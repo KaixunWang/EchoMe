@@ -65,7 +65,11 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f; // 恢复时间再切换场景
         SceneManager.LoadScene("Menu");
     }
-
+    public void ReturnToLevelSelect()
+    {
+        Time.timeScale = 1f; // 恢复时间再切换场景
+        SceneManager.LoadScene("LevelSelectScene");
+    }
     public void QuitGame()
     {
         Debug.Log("Quit Game");

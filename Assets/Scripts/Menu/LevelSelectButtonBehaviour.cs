@@ -15,6 +15,11 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
     [Header("UI组件")]
     public Image buttonImage; // 按钮图片组件
     
+    [Header("星星UI")]
+    public Image[] starImages; // 拖3个星星Image进来
+    public Sprite starOn; // 点亮的星星
+    public Sprite starOff; // 灰色星星
+    
     private bool isUnlocked = false; // 是否解锁
     private bool isPressed = false; // 是否被按下
     
@@ -58,20 +63,16 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
     // 检查关卡是否解锁
     void CheckLevelUnlock()
     {
-        // 这里可以根据你的游戏存档系统来判断关卡是否解锁
-        // 例如：isUnlocked = PlayerPrefs.GetInt("Level_" + levelIndex + "_Unlocked", 0) == 1;
-        
-        // 确保第0关默认解锁
+        // 第0关默认解锁
         if (levelIndex == 0)
         {
             isUnlocked = true;
         }
         else
         {
-            // 其他关卡可以根据需要设置解锁条件
-            isUnlocked = levelIndex <= 1; // 临时：前1关默认解锁
+            // 其他关卡：上一关获得≥1星才解锁
+            isUnlocked = PlayerPrefs.GetInt($"Level_{levelIndex - 1}_Stars", 0) >= 1;
         }
-        
         Debug.Log($"关卡 {levelIndex} 解锁状态: {isUnlocked}");
     }
     
@@ -140,5 +141,39 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
     {
         isUnlocked = true;
         UpdateButtonImage();
+    }
+
+    // 设置星星显示
+    public void SetStars(int starCount)
+    {
+        CheckLevelUnlock(); // 确保isUnlocked是最新的
+        if (starImages == null || starImages.Length == 0) return;
+
+        // 没解锁就隐藏所有星星
+        if (!isUnlocked)
+        {
+            foreach (var img in starImages)
+            {
+                Debug.Log("隐藏星星");
+                if (img != null) img.gameObject.SetActive(false);
+            }
+            return;
+        }
+
+        // 解锁后显示星星
+        for (int i = 0; i < starImages.Length; i++)
+        {
+            if (starImages[i] != null)
+            {
+                starImages[i].gameObject.SetActive(true);
+                starImages[i].sprite = i < starCount ? starOn : starOff;
+            }
+        }
+    }
+
+    // 获取当前关卡星星数
+    public int GetStars()
+    {
+        return PlayerPrefs.GetInt($"Level_{levelIndex}_Stars", 0);
     }
 }
