@@ -17,6 +17,7 @@ public class SceneManagerScript : MonoBehaviour
     public int levelGoodTime = 60;
     public List<GameObject> doors; // List of door GameObjects
     public List<GameObject> boxes; // List of box GameObjects
+    public List<GameObject> lifts; // List of lift GameObjects
     private int score = 0;
     // Start is called before the first frame update
     void Start()
@@ -141,6 +142,20 @@ public class SceneManagerScript : MonoBehaviour
             currentState.boxPositions.Add(boxObj.transform.position);
             currentState.boxSpeed.Add(boxObj.GetComponent<Rigidbody2D>().velocity); // Assuming you want to save the speed of the box
         }
+        // Debug.Log("lifts.Count: " + lifts.Count);
+        foreach (var liftObj in lifts)
+        {
+            var platformController = liftObj.GetComponent<Bundos.MovingPlatforms.PlatformController>();
+            if (platformController != null)
+            {
+                currentState.lifts.Add(platformController.GetStatus());
+                Debug.Log("Lift " + liftObj.name + " state saved.");
+            }
+            else
+            {
+                Debug.LogWarning("Lift " + liftObj.name + " does not have a PlatformController component.");
+            }
+        }
         isRecording = true;
         Debug.Log("Scene state saved");
     }
@@ -190,6 +205,17 @@ public class SceneManagerScript : MonoBehaviour
                 // {
                 //     boxComponent.transform.position = currentState.boxPositions[i];
                 // }
+            }
+            Debug.Log("lifts.Count: " + lifts.Count);
+            Debug.Log("currentState.lifts.Count: " + currentState.lifts.Count);
+            for (int i = 0; i < lifts.Count && i < currentState.lifts.Count; i++)
+            {
+                var platformController = lifts[i].GetComponent<Bundos.MovingPlatforms.PlatformController>();
+                if (platformController != null)
+                {
+                    platformController.SetStatus(currentState.lifts[i]);
+                    Debug.Log("Lift " + lifts[i].name + " state loaded.");
+                }
             }
             // Restore other states as needed
             isRecording = false;
