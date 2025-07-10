@@ -24,15 +24,13 @@ public class MenuManager : MonoBehaviour
     // 返回主菜单（可用于暂停菜单中）
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Menu");
     }
     
     // 显示成就菜单
     public void ShowAchievements()
     {
         Debug.Log("显示成就菜单");
-        // 这里可以添加显示成就菜单的逻辑
-        // 比如加载成就场景或显示成就UI面板
         SceneManager.LoadScene("AchievementsScene");
     }
 }

@@ -336,6 +336,10 @@ public class EchoBehaviour : MonoBehaviour
         if (isNearSwitch && switchObject != null)
         {
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+            if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
+            {
+                switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
+            }
         }
     }
     
@@ -386,10 +390,6 @@ public class EchoBehaviour : MonoBehaviour
             Debug.Log("Player is near Switch");
             isNearSwitch = true;
             switchObject = other.gameObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
-            if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
-            {
-                switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
-            }
         }
         // if (other.gameObject.name == "Board")
         // {
