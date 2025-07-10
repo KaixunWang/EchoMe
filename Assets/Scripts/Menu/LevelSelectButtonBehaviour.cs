@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class LevelSelectButtonBehaviour : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
         if (buttonImage == null)
             buttonImage = GetComponent<Image>();
             
+        // 自动设置按钮点击事件
+        SetupButtonClick();
+            
         // 检查关卡是否解锁
         CheckLevelUnlock();
         
@@ -30,12 +34,45 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
         UpdateButtonImage();
     }
     
+    // 自动设置按钮点击事件
+    void SetupButtonClick()
+    {
+        // 获取Button组件
+        Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            // 清除现有的点击事件
+            button.onClick.RemoveAllListeners();
+            
+            // 添加新的点击事件
+            button.onClick.AddListener(OnClick);
+            
+            Debug.Log($"已为关卡 {levelIndex} 按钮设置点击事件");
+        }
+        else
+        {
+            Debug.LogError($"关卡 {levelIndex} 按钮缺少Button组件！");
+        }
+    }
+    
     // 检查关卡是否解锁
     void CheckLevelUnlock()
     {
         // 这里可以根据你的游戏存档系统来判断关卡是否解锁
         // 例如：isUnlocked = PlayerPrefs.GetInt("Level_" + levelIndex + "_Unlocked", 0) == 1;
-        isUnlocked = levelIndex <= 0; // 临时：前0关默认解锁
+        
+        // 确保第0关默认解锁
+        if (levelIndex == 0)
+        {
+            isUnlocked = true;
+        }
+        else
+        {
+            // 其他关卡可以根据需要设置解锁条件
+            isUnlocked = levelIndex <= 1; // 临时：前1关默认解锁
+        }
+        
+        Debug.Log($"关卡 {levelIndex} 解锁状态: {isUnlocked}");
     }
     
     // 更新按钮图片
@@ -60,6 +97,8 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
     // 点击进入关卡
     public void OnClick()
     {
+        Debug.Log($"按钮被点击！关卡 {levelIndex}");
+        
         if (!isUnlocked)
         {
             Debug.Log("关卡 " + levelIndex + " 尚未解锁！");
@@ -69,10 +108,24 @@ public class LevelSelectButtonBehaviour : MonoBehaviour
         Debug.Log("进入关卡 " + levelIndex);
         
         // 通知LevelSelectManager
-        LevelSelectManager.Instance?.OnLevelButtonClicked(levelIndex);
+        if (LevelSelectManager.Instance != null)
+        {
+            LevelSelectManager.Instance.OnLevelButtonClicked(levelIndex);
+        }
+        else
+        {
+            Debug.LogError("LevelSelectManager.Instance 为空！");
+        }
         
         // 设置按下状态
         SetPressed(true);
+    }
+    
+    // 鼠标点击检测（备用方法）
+    void OnMouseDown()
+    {
+        Debug.Log($"鼠标点击检测到！关卡 {levelIndex}");
+        OnClick();
     }
     
     // 设置按下状态

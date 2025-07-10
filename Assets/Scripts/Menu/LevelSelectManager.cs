@@ -51,7 +51,7 @@ public class LevelSelectManager : MonoBehaviour
         {
             if (levelButtons[i] != null)
             {
-                levelButtons[i].levelIndex = i + 1;
+                levelButtons[i].levelIndex = i; // 从0开始，这样第0关就是第一个按钮
             }
         }
         
@@ -80,18 +80,31 @@ public class LevelSelectManager : MonoBehaviour
     // 加载关卡
     void LoadLevel(int levelIndex)
     {
-        string sceneName = levelScenePrefix + levelIndex;
+        // 尝试多种场景命名格式
+        string[] possibleSceneNames = {
+            levelScenePrefix + levelIndex,           // "Level_0", "Level_1"
+            levelScenePrefix + (levelIndex + 1),     // "Level_1", "Level_2" (如果场景从1开始命名)
+            "Level" + levelIndex,                    // "Level0", "Level1"
+            "Level" + (levelIndex + 1)              // "Level1", "Level2"
+        };
         
-        Debug.Log("尝试加载关卡: " + sceneName);
+        foreach (string sceneName in possibleSceneNames)
+        {
+            Debug.Log("尝试加载关卡: " + sceneName);
+            
+            try
+            {
+                SceneManager.LoadScene(sceneName);
+                return; // 如果成功加载，直接返回
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("无法加载场景: " + sceneName + "。尝试下一个...");
+            }
+        }
         
-        try
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("无法加载场景: " + sceneName + "。请确保场景已添加到Build Settings中。错误: " + e.Message);
-        }
+        // 如果所有尝试都失败
+        Debug.LogError("无法加载关卡 " + levelIndex + "。请确保场景已添加到Build Settings中，并检查场景命名规则。");
     }
     
     // 解锁关卡
