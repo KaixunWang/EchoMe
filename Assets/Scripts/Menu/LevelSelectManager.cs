@@ -61,8 +61,18 @@ public class LevelSelectManager : MonoBehaviour
     // 加载已解锁的关卡
     void LoadUnlockedLevels()
     {
-        // 这里可以从存档系统加载已解锁的关卡
-        // 例如：int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 1);
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            if (levelButtons[i] == null) continue;
+            int stars = PlayerPrefs.GetInt($"Level_{i}_Stars", 0);
+            levelButtons[i].SetStars(stars);
+
+            // 解锁逻辑：第0关默认解锁，其余关卡上一关>=1星才解锁
+            if (i == 0 || PlayerPrefs.GetInt($"Level_{i - 1}_Stars", 0) >= 1)
+            {
+                levelButtons[i].UnlockLevel();
+            }
+        }
     }
     
     // 关卡按钮被点击时的处理

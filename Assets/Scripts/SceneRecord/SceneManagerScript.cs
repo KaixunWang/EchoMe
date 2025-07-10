@@ -57,6 +57,24 @@ public class SceneManagerScript : MonoBehaviour
             // clock.SetActive(false);
             // player.SetActive(false);
             Debug.Log("You Win!");
+
+            // ----------- 新增：保存星星数到PlayerPrefs -----------
+            // 获取当前关卡编号
+            int currentLevelIndex = 0;
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            if (sceneName.StartsWith("Level_"))
+            {
+                int.TryParse(sceneName.Substring("Level_".Length), out currentLevelIndex);
+            }
+            // 只保存更高的星星数
+            int oldStars = PlayerPrefs.GetInt($"Level_{currentLevelIndex}_Stars", 0);
+            if (score > oldStars)
+            {
+                PlayerPrefs.SetInt($"Level_{currentLevelIndex}_Stars", score);
+                PlayerPrefs.Save();
+                Debug.Log($"保存关卡{currentLevelIndex}星星数: {score}");
+            }
+            // ---------------------------------------------
         }
     }
 
