@@ -15,6 +15,7 @@ public class SceneManagerScript : MonoBehaviour
     public List<GameObject> pressurePlates; // List of pressure plate GameObjects
     public List<GameObject> doors; // List of door GameObjects
     public List<GameObject> boxes; // List of box GameObjects
+    private int score = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,28 +40,30 @@ public class SceneManagerScript : MonoBehaviour
         {
             LoadState();
         }
-        if(playerBehaviour.IsWin())
+        if (playerBehaviour.IsWin())
         {
             win.SetActive(true);
-            int score = 1;
-            if(clock.GetComponent<TimerBehavior>().GetElapsedTime() < 60)
+            score = 1;
+            if (clock.GetComponent<TimerBehavior>().GetElapsedTime() < 60)
             {
-                score ++;
+                score++;
             }
             if (coinSystem.GetComponent<CoinSystemScript>().GetCoinCount() == 3)
             {
-                score++; 
+                score++;
             }
             win.GetComponent<WinScript>().SetStars(score);
-            clock.SetActive(false);
-            player.SetActive(false);
+            clock.GetComponent<TimerBehavior>().SetTimer(false);
+            // clock.SetActive(false);
+            // player.SetActive(false);
             Debug.Log("You Win!");
         }
     }
 
     void SaveState()
     {
-        currentState = new SceneState {
+        currentState = new SceneState
+        {
             playerPosition = player.transform.position
             // switchState = switchState, // Assuming you have a switch state
             // pressurePlateState = pressurePlateState, // Assuming you have a pressure plate state
@@ -73,6 +76,7 @@ public class SceneManagerScript : MonoBehaviour
             if (switchComponent != null)
             {
                 currentState.switchStates.Add(switchComponent.IsOn);
+                currentState.switchRemainingTimes.Add(switchComponent.GetRemainingTime());
                 Debug.Log($"Switch {switchObj.name} state: {switchComponent.IsOn}");
             }
         }
@@ -107,15 +111,19 @@ public class SceneManagerScript : MonoBehaviour
         if (currentState != null)
         {
             player.transform.position = currentState.playerPosition;
-            for(int i = 0; i < switches.Count && i < currentState.switchStates.Count; i++)
+            for (int i = 0; i < switches.Count && i < currentState.switchStates.Count; i++)
             {
                 var switchComponent = switches[i].GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>();
                 if (switchComponent != null)
                 {
                     switchComponent.IsOn = currentState.switchStates[i];
+                    if (switchComponent.IsOn)
+                    {
+                        switchComponent.SetRemainingTime(currentState.switchRemainingTimes[i]);
+                    }
                 }
             }
-            for(int i = 0; i < pressurePlates.Count && i < currentState.pressurePlateStates.Count; i++)
+            for (int i = 0; i < pressurePlates.Count && i < currentState.pressurePlateStates.Count; i++)
             {
                 var plateComponent = pressurePlates[i].GetComponent<BoardBehavior>();
                 if (plateComponent != null)
@@ -123,7 +131,7 @@ public class SceneManagerScript : MonoBehaviour
                     plateComponent.SetBoardState(currentState.pressurePlateStates[i]);
                 }
             }
-            for(int i = 0; i < doors.Count && i < currentState.doorStates.Count; i++)
+            for (int i = 0; i < doors.Count && i < currentState.doorStates.Count; i++)
             {
                 var doorComponent = doors[i].GetComponent<Cainos.PixelArtPlatformer_Dungeon.Door>();
                 if (doorComponent != null)
@@ -149,5 +157,9 @@ public class SceneManagerScript : MonoBehaviour
         {
             Debug.LogWarning("No saved state to load");
         }
+    }
+    public int GetScore()
+    {
+        return score;
     }
 }
