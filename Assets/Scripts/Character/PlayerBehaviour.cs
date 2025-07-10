@@ -168,6 +168,7 @@ public class PlayerBehaviour : MonoBehaviour
     // 当shadow销毁时调用，让player回到正常状态
     public void ReturnToPlayer()
     {
+        isInputEnabled = false;
         Debug.Log("Returning to player");
 
         // 重置动画状态
@@ -192,6 +193,13 @@ public class PlayerBehaviour : MonoBehaviour
                 }
             }
         }
+        StartCoroutine(EnableInputAfterDelay(0.16f));
+    }
+    private IEnumerator EnableInputAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isInputEnabled = true;
+        Debug.Log("Input re-enabled after delay");
     }
 
     void OnCollisionEnter2D(Collision2D collision)
