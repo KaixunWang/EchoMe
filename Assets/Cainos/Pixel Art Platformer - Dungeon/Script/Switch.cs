@@ -13,6 +13,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
     public class Switch : MonoBehaviour
     {
         [FoldoutGroup("Reference")] public Door target;
+        [FoldoutGroup("Reference")] public Bundos.MovingPlatforms.PlatformController targetPlatform;
         [Space]
         [FoldoutGroup("Reference")] public SpriteRenderer spriteRenderer;
         [FoldoutGroup("Reference")] public Sprite spriteOn;
@@ -39,28 +40,28 @@ namespace Cainos.PixelArtPlatformer_Dungeon
 
         public void TriggerDoor()
         {
-            if (target.tag == "door")
+            if (target != null && target.tag == "door")
             {
-                if (IsOn && target != null)
+                if (IsOn)
                 {
                     Debug.Log("Switch: Open the door");
                     target.SetDoor(true);
                 }
-                else if (!IsOn && target != null)
+                else
                 {
                     Debug.Log("Switch: Close the door");
                     target.SetDoor(false);
                 }
             }
-            if (target.tag == "gate")
+            if (target != null && target.tag == "gate")
             {
-                if (IsOn && target != null)
+                if (IsOn)
                 {
                     Debug.Log("Switch: Open the gate");
                     target.SetDoor(true); // 确保门关闭状态
                     target.SetGate(true);
                 }
-                else if (!IsOn && target != null)
+                else
                 {
                     Debug.Log("Switch: Close the gate");
                     target.SetDoor(false); // 确保门关闭状态
@@ -114,7 +115,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                     Animator.SetBool("IsOn", isOn);
 
                     // 当开关从关闭变为开启时，启动自动关闭协程
-                    if (!previousState && isOn)
+                    if (!previousState && isOn && target != null)
                     {
                         // 停止之前的自动关闭协程（如果存在）
                         if (autoCloseCoroutine != null)

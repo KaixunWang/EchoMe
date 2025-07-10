@@ -9,6 +9,7 @@ TagManager:
   - beacon
   - lamp
   - MovingPlatform
+  - switch
   layers:
   - Default
   - TransparentFX
