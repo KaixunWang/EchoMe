@@ -178,7 +178,7 @@ public class ShadowBehaviour : MonoBehaviour
     private float jumpForce = 13f;
     private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
-    [SerializeField] private float destroyAlpha = 0.3f; // 销毁影子的透明度阈值
+    [SerializeField] private float destroyAlpha = 0.2f; // 销毁影子的透明度阈值
     private float minAlphaDistance; // 最小透明度距离
     private float maxAlphaDistance;
     
