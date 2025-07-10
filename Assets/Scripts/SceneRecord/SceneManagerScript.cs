@@ -45,6 +45,7 @@ public class SceneManagerScript : MonoBehaviour
         }
         if (playerBehaviour.IsWin())
         {
+            GameObject.Find("PauseObject").GetComponent<PauseMenuManager>().SetEndState(); // 设置游戏结束状态
             win.SetActive(true);
             string message = "Finish Level!\n";
             score = 1;
@@ -91,6 +92,7 @@ public class SceneManagerScript : MonoBehaviour
             // ---------------------------------------------
         }else if (playerBehaviour.IsLose())
         {
+            GameObject.Find("PauseObject").GetComponent<PauseMenuManager>().SetEndState(); // 设置游戏结束状态
             lose.SetActive(true);
             clock.GetComponent<TimerBehavior>().SetTimer(false);
             // clock.SetActive(false);
