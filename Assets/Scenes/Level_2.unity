@@ -301,6 +301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1990042494307474270, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
+      propertyPath: m_TagString
+      value: switch
+      objectReference: {fileID: 0}
     - target: {fileID: 5437204593989898298, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.13
@@ -35286,7 +35290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2484947027368388107, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: waypoints.Array.data[0].y
-      value: -5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2484947027368388107, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: waypoints.Array.data[1].x
@@ -35294,7 +35298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2484947027368388107, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: waypoints.Array.data[1].y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6645608550845518430, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35302,7 +35306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6645608550845518430, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.8
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 6645608550845518430, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
       propertyPath: m_LocalPosition.z

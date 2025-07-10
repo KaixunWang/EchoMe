@@ -327,6 +327,10 @@ public class ShadowBehaviour : MonoBehaviour
         {
             Debug.Log("E pressed near switch");
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+            if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
+            {
+                switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
+            }
         }
         
         // 立即销毁
