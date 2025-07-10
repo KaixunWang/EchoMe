@@ -15,6 +15,11 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         [FoldoutGroup("Reference")] public Sprite spriteOpened;
         [FoldoutGroup("Reference")] public Sprite spriteClosed;
 
+        private bool Control = true;
+        public void SetControl(bool state)
+        {
+            Control = state;
+        }
 
         private Animator Animator
         {
@@ -59,12 +64,20 @@ namespace Cainos.PixelArtPlatformer_Dungeon
 
         public void SetDoor(bool state)
         {
+            if (Control == false)
+            {
+                return;
+            }
             Debug.Log("Door state set to: " + state);
             IsOpened = state;
         }
 
         public void SetGate(bool state)
         {
+            if (Control == false)
+            {
+                return;
+            }
             Collider2D targetCollider = GetComponent<Collider2D>();
             if (targetCollider != null)
                 targetCollider.isTrigger = state; // 设置为触发器或非触发器
