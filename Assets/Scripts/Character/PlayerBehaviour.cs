@@ -8,7 +8,6 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public bool isGrounded = false;
 
-    public
     public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
