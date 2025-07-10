@@ -88,6 +88,13 @@ public class SceneManagerScript : MonoBehaviour
                 Debug.Log($"保存关卡{currentLevelIndex}星星数: {score}");
             }
             // ---------------------------------------------
+        }else if (playerBehaviour.IsLose())
+        {
+            lose.SetActive(true);
+            clock.GetComponent<TimerBehavior>().SetTimer(false);
+            // clock.SetActive(false);
+            // player.SetActive(false);
+            Debug.Log("You Lose!");
         }
     }
 
@@ -152,6 +159,10 @@ public class SceneManagerScript : MonoBehaviour
                     {
                         switchComponent.SetRemainingTime(currentState.switchRemainingTimes[i]);
                     }
+                    // else
+                    // {
+                    //     switchComponent.SetRemainingTime(0f); // Reset remaining time if switch is off
+                    // }
                 }
             }
             for (int i = 0; i < pressurePlates.Count && i < currentState.pressurePlateStates.Count; i++)
