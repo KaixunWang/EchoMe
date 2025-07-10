@@ -3765,6 +3765,7 @@ MonoBehaviour:
   - {fileID: 1190660882}
   - {fileID: 1725795667}
   boxes: []
+  lifts: []
 --- !u!4 &754050757
 Transform:
   m_ObjectHideFlags: 0
