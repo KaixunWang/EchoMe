@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773d07ee2a002942ad02dd90af2ecb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetMultiplier: 0.3
+  offsetMultiplier: 30
   smoothTime: 0.3
 --- !u!1 &114372592
 GameObject:
@@ -1337,7 +1337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773d07ee2a002942ad02dd90af2ecb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetMultiplier: 0.3
+  offsetMultiplier: 30
   smoothTime: 0.3
 --- !u!1 &1111836751
 GameObject:
