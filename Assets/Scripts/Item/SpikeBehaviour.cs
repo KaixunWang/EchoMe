@@ -23,12 +23,12 @@ public class SpikeBehavioudr : MonoBehaviour
             other.GetComponent<PlayerBehaviour>().TakeDamage("Spike");
 
         }
-        if (other.name == "Shadow(Clone)")
-        {
-            Debug.Log("Shadow hit the spike!");
-            // 示例调用：影子掉血
-            other.GetComponent<ShadowBehaviour>().DestroybyTrap();
-        }
+        // if (other.name == "Shadow(Clone)")
+        // {
+        //     Debug.Log("Shadow hit the spike!");
+        //     // 示例调用：影子掉血
+        //     other.GetComponent<ShadowBehaviour>().DestroybyTrap();
+        // }
         if (other.name == "Echo(Clone)")
         {
             Debug.Log("Echo hit the spike!");
