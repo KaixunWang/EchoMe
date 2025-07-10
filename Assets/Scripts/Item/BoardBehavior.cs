@@ -13,6 +13,8 @@ public class BoardBehavior : MonoBehaviour
     public Sprite spriteOpened;
     public Sprite spriteClosed;
     public Cainos.PixelArtPlatformer_Dungeon.Door door = null;
+    private int count = 0;
+
 
     private Animator Animator
     {
@@ -72,14 +74,18 @@ public class BoardBehavior : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        count++;
         IsOpened = true;
         TriggerDoor(); // 触发门的开关
         //gogogo
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        IsOpened = false; // 切换门的开关状态
-        TriggerDoor(); // 触发门的开关
+        count--;
+        if (count <= 0){
+            IsOpened = false; // 切换门的开关状态
+            TriggerDoor(); // 触发门的开关
+        }
     }
     public bool GetBoardState()
     {

@@ -381,7 +381,7 @@ public class EchoBehaviour : MonoBehaviour
             rb.gravityScale = 0f; // 禁用重力
             Debug.Log("Player entered MovingPlatform");
         }
-        if (other.gameObject.name == "Switch")
+        if (other.gameObject.tag == "switch")
         {
             Debug.Log("Player is near Switch");
             isNearSwitch = true;
@@ -407,7 +407,7 @@ public class EchoBehaviour : MonoBehaviour
             rb.gravityScale = 3.5f; // 恢复重力
             Debug.Log("Player exited MovingPlatform");
         }
-        if (other.gameObject.name == "Switch")
+        if (other.gameObject.tag == "switch")
         {
             Debug.Log("Player is out Switch");
             isNearSwitch = false;

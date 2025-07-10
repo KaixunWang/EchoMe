@@ -124,6 +124,10 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.Log("E pressed near switch");
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+            if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
+            {
+                switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
+            }
         }
 
         if (isInputEnabled && Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())
@@ -242,7 +246,7 @@ public class PlayerBehaviour : MonoBehaviour
             beaconBehaviour = other.gameObject.GetComponent<BeaconBehaviour>();
         }
 
-        if (other.gameObject.name == "Switch")
+        if (other.gameObject.tag == "switch")
         {
             Debug.Log("Player is near Switch");
             isNearSwitch = true;
@@ -296,7 +300,7 @@ public class PlayerBehaviour : MonoBehaviour
             nearBeaconPosition = Vector3.zero;
         }
 
-        if (other.gameObject.name == "Switch")
+        if (other.gameObject.tag == "switch")
         {
             Debug.Log("Player is out Switch");
             isNearSwitch = false;

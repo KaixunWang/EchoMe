@@ -8,6 +8,8 @@ TagManager:
   - gate
   - beacon
   - lamp
+  - MovingPlatform
+  - switch
   layers:
   - Default
   - TransparentFX
