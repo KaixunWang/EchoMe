@@ -11809,7 +11809,9 @@ MonoBehaviour:
   clock: {fileID: 1161499463}
   win: {fileID: 768368654}
   lose: {fileID: 1802436517}
-  coinSystem: {fileID: 579945378}
+
+  coinSystem: {fileID: 1836305597}
+
   switches: []
   pressurePlates:
   - {fileID: 1012974690}
@@ -11937,6 +11939,11 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4025436293709944512, guid: 96263b33edb21f14fa00a07e1ffa0e74, type: 3}
   m_PrefabInstance: {fileID: 1802436515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1836305597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5428338766810797316, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+  m_PrefabInstance: {fileID: 509814831}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8998223218172543068
 PrefabInstance:
