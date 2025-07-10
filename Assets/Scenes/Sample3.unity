@@ -1134,7 +1134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1142,7 +1142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchorMin.y
@@ -1186,7 +1186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 1568022176389912661, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1469,7 +1469,7 @@ Transform:
   m_GameObject: {fileID: 1855243412}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: -0.006, y: 0.006, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12108,7 +12108,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5437204593989898298, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3659105
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 5437204593989898298, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12146,10 +12146,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5462017029474844879, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
-      propertyPath: door
-      value: 
-      objectReference: {fileID: 1830032980}
     - target: {fileID: 5462017029474844879, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
       propertyPath: target
       value: 
