@@ -244,6 +244,7 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("Beacon Updated");
             isNearBeacon = true;
             nearBeaconPosition = other.gameObject.transform.position;
+            nearBeaconPosition.y += 0.5f;
             beaconBehaviour = other.gameObject.GetComponent<BeaconBehaviour>();
         }
 
