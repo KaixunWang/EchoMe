@@ -15,13 +15,22 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Quit Game");
         Application.Quit();
     }
+    
     public void PlayGame()
     {
         SceneManager.LoadScene("LevelSelectScene");
     }
+    
     // 返回主菜单（可用于暂停菜单中）
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Menu");
+    }
+    
+    // 显示成就菜单
+    public void ShowAchievements()
+    {
+        Debug.Log("显示成就菜单");
+        SceneManager.LoadScene("AchievementsScene");
     }
 }

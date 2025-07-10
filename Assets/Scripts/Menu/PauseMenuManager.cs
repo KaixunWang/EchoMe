@@ -59,7 +59,10 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f; // 恢复时间
         isPaused = false;
     }
-
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f; // 恢复时间再切换场景

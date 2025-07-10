@@ -49,7 +49,7 @@ public class BeaconBehaviour : MonoBehaviour
             return;
         }
 
-        mainCamera.transform.position = new Vector3(shadow.transform.position.x, shadow.transform.position.y, -10);
+        // mainCamera.transform.position = new Vector3(shadow.transform.position.x, shadow.transform.position.y, -10);
         cameraFollow.target = shadow.transform;
 
         Debug.Log("Camera target set to shadow");
