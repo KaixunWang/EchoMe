@@ -344,6 +344,7 @@ public class PlayerBehaviour : MonoBehaviour
     IEnumerator GoOutCoroutine()
     {
         bool isRight = Exit.transform.position.x > transform.position.x;
+        Exit.SetControl(false); // 禁用门的控制
 
         float duration = 2.0f; // 动画持续时间
         float elapsed = 0.0f;
