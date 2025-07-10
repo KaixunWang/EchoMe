@@ -52,7 +52,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (isPaused) return; // 如果游戏暂停，直接返回
+        if (isPaused||lose||win) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态
         bool isShadow = animator.GetBool("IsShadow");
 
@@ -70,7 +70,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (isPaused) return; // 如果游戏暂停，直接返回
+        if (isPaused||lose||win) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
         isGrounded = CheckGrounded();
@@ -409,10 +409,12 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public bool IsLose()
     {
+        
         return lose; // 返回是否输掉游戏的状态
     }
     public void TakeDamage(string source)
     {
+        Time.timeScale = 0; // 停止时间Time.timeScale = 0; // 停止时间
         lose = true;
         Debug.Log("Player took damage from " + source);
     }

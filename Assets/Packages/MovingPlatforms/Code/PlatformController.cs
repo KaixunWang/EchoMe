@@ -46,6 +46,46 @@ namespace Bundos.MovingPlatforms
         {
             RemainingCount = count;
         }
+        public void SetStatus(PlatformState state)
+        {
+            waypoints = state.waypoints;
+            handleRadius = state.handleRadius;
+            snappingSettings = state.snappingSettings;
+            gizmoDeselectedColor = state.gizmoDeselectedColor;
+            editing = state.editing;
+            pathType = state.pathType;
+            behaviorType = state.behaviorType;
+            moveSpeed = state.moveSpeed;
+            stopDistance = state.stopDistance;
+            lastWaypointIndex = state.lastWaypointIndex;
+            currentWaypointIndex = state.currentWaypointIndex;
+            direction = state.direction;
+            RemainingCount = state.RemainingCount;
+            transform.position = state.position; // Restore the platform's initial position
+
+            if (rb == null)
+                rb = GetComponent<Rigidbody2D>();
+        }
+        public PlatformState GetStatus()
+        {
+            PlatformState state = new PlatformState();
+            state.waypoints = waypoints;
+            state.handleRadius = handleRadius;
+            state.snappingSettings = snappingSettings;
+            state.gizmoDeselectedColor = gizmoDeselectedColor;
+            state.editing = editing;
+            state.pathType = pathType;
+            state.behaviorType = behaviorType;
+            state.moveSpeed = moveSpeed;
+            state.stopDistance = stopDistance;
+            state.lastWaypointIndex = lastWaypointIndex;
+            state.currentWaypointIndex = currentWaypointIndex;
+            state.direction = direction;
+            state.RemainingCount = RemainingCount;
+            state.position = transform.position; // Save the platform's initial position
+
+            return state;
+        }
         private void Update()
         {
             if (RemainingCount == 0)
