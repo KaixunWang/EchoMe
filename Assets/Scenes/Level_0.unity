@@ -5340,7 +5340,7 @@ MonoBehaviour:
   coinSystem: {fileID: 579945378}
   switches: []
   pressurePlates: []
-  levelGoodTime: 60
+  levelGoodTime: 15
   doors: []
   boxes: []
   lifts: []
