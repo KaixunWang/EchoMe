@@ -57,7 +57,7 @@ public class SceneManagerScript : MonoBehaviour
             } else {
                 message += "Collect Coins:" + coinSystem.GetComponent<CoinSystemScript>().GetCoinCount() + "/3\n";
             }
-            if (clock.GetComponent<TimerBehavior>().GetElapsedTime() < levelGoodTime)
+            if (clock.GetComponent<TimerBehavior>().GetElapsedTime() <= levelGoodTime)
             {
                 score++;
                 message += "Time: " + clock.GetComponent<TimerBehavior>().GetElapsedTime() + "/" + levelGoodTime + "s\n";
