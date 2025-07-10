@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 1144583870203724009}
   m_Layer: 0
   m_Name: Switch
-  m_TagString: Untagged
+  m_TagString: switch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  targetPlatform: {fileID: 0}
   spriteRenderer: {fileID: 991917628361141982}
   spriteOn: {fileID: 1446294333, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
   spriteOff: {fileID: -1141442345, guid: 0afeb8577b003fb4589464f46d5b4b88, type: 3}
