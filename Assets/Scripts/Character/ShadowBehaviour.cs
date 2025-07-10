@@ -179,7 +179,6 @@ public class ShadowBehaviour : MonoBehaviour
     private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
     [SerializeField] private float destroyAlpha = 0.2f; // 销毁影子的透明度阈值
-    private float minAlphaDistance; // 最小透明度距离
     private float maxAlphaDistance;
     
     private bool isGrounded = false;
@@ -346,11 +345,10 @@ public class ShadowBehaviour : MonoBehaviour
             Vector2 shadowPos = transform.position;
 
             // 计算距离
-            float distance = Vector2.Distance(shadowPos, lampPos);
+            float distance = Mathf.Abs(lampPos.x - shadowPos.x);
 
             // 根据距离计算透明度（越近越透明）
-            float alpha = Mathf.InverseLerp(minAlphaDistance, maxAlphaDistance, distance);
-
+            float alpha = Mathf.InverseLerp(0, maxAlphaDistance, distance);
 
             // 设置颜色透明度
             SpriteRenderer shadowSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -474,8 +472,7 @@ public class ShadowBehaviour : MonoBehaviour
         if (other.gameObject.tag == "lamp")
         {
             lamp = other.gameObject;
-            minAlphaDistance = lamp.transform.position.y - transform.position.y; // 设置最小透明度距离
-            maxAlphaDistance = Vector2.Distance(transform.position, lamp.transform.position); // 设置最大透明度距离
+            maxAlphaDistance = Mathf.Abs(lamp.transform.position.x - transform.position.x);
         }
     }
 
