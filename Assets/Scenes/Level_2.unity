@@ -947,6 +947,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+--- !u!114 &536093945 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4810050538705875983, guid: e0964d75d4fad3141b2696b4cc13b2c8, type: 3}
+  m_PrefabInstance: {fileID: 382736181}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ee70320ea2b1a49b755875123f589b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &537976379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35069,6 +35080,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2071808408937008394, guid: a8c889116495da54397835781b005aba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 536093945}
+    - target: {fileID: 2152364206274318664, guid: a8c889116495da54397835781b005aba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 536093945}
     - target: {fileID: 8735341808391543837, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_Name
       value: Summary_win
@@ -35427,6 +35446,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1430798747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5428338766810797316, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+  m_PrefabInstance: {fileID: 509814831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1470937295 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5760846579451053057, guid: 2e6beff292853594ebc04470710f07c7, type: 3}
@@ -38306,11 +38330,12 @@ MonoBehaviour:
   clock: {fileID: 1161499463}
   win: {fileID: 768368654}
   lose: {fileID: 1802436517}
-  coinSystem: {fileID: 5428338766810797316, guid: 247886a0f203e0c4da2a3497bd808fb1, type: 3}
+  coinSystem: {fileID: 1430798747}
   switches:
   - {fileID: 1745966247}
   - {fileID: 1470937295}
   pressurePlates: []
+  levelGoodTime: 60
   doors:
   - {fileID: 363130573}
   boxes: []
