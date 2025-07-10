@@ -12,4 +12,5 @@ public class SceneState
     public List<bool> doorStates = new List<bool>();
     public List<Vector3> boxPositions = new List<Vector3>();
     public List<Vector3> boxSpeed = new List<Vector3>();
+    public List<PlatformState> lifts = new List<PlatformState>();
 }

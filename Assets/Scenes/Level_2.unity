@@ -38291,7 +38291,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2484947027368388107, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
   m_PrefabInstance: {fileID: 1210425150}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2110260156}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b7de2610c17b64da84904fa14d13aa, type: 3}
@@ -38339,6 +38339,8 @@ MonoBehaviour:
   doors:
   - {fileID: 363130573}
   boxes: []
+  lifts:
+  - {fileID: 2110260156}
 --- !u!4 &1655490169
 Transform:
   m_ObjectHideFlags: 0
@@ -38465,6 +38467,11 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4025436293709944512, guid: 96263b33edb21f14fa00a07e1ffa0e74, type: 3}
   m_PrefabInstance: {fileID: 1802436515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2110260156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2013299536771931646, guid: c7263a5cee7ff1a45afeedd12be4d038, type: 3}
+  m_PrefabInstance: {fileID: 1210425150}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
