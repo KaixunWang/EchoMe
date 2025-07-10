@@ -178,6 +178,9 @@ public class ShadowBehaviour : MonoBehaviour
     [SerializeField] private float jumpForce = 13f;
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
+    [SerializeField] private float destroyAlpha = 0.3f; // 销毁影子的透明度阈值
+    private float minAlphaDistance; // 最小透明度距离
+    private float maxAlphaDistance;
     
     private bool isGrounded = false;
     private float moveInput = 0f;
@@ -185,6 +188,7 @@ public class ShadowBehaviour : MonoBehaviour
 
     private bool isNearSwitch = false;
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
+    private GameObject lamp = null; // 灯对象引用
     private BoxesBehavior boxes = null;
     
     // 基于时间的输入记录
@@ -246,6 +250,8 @@ public class ShadowBehaviour : MonoBehaviour
         
         // 处理实际输入
         HandleInput();
+
+        HandleLamp(); // 处理灯光效果
     }
     
     void FixedUpdate()
@@ -328,6 +334,35 @@ public class ShadowBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             DestroyImmediate();
+        }
+
+        
+    }
+
+    void HandleLamp(){
+        if (lamp != null){
+            // 获取灯的位置和影子位置
+            Vector2 lampPos = lamp.transform.position;
+            Vector2 shadowPos = transform.position;
+
+            // 计算距离
+            float distance = Vector2.Distance(shadowPos, lampPos);
+
+            // 根据距离计算透明度（越近越透明）
+            float alpha = Mathf.InverseLerp(minAlphaDistance, maxAlphaDistance, distance);
+
+
+            // 设置颜色透明度
+            SpriteRenderer shadowSpriteRenderer = GetComponent<SpriteRenderer>();
+            Color newColor = shadowSpriteRenderer.color;
+            newColor.a = alpha;
+            shadowSpriteRenderer.color = newColor;
+
+            // 如果透明度低于阈值，销毁影子
+            if (alpha <= destroyAlpha)
+            {
+                DestroyImmediate();
+            }
         }
     }
     
@@ -436,6 +471,12 @@ public class ShadowBehaviour : MonoBehaviour
         //         board.TriggerDoor(); // 触发门的开关
         //     }
         // }
+        if (other.gameObject.tag == "lamp")
+        {
+            lamp = other.gameObject;
+            minAlphaDistance = lamp.transform.position.y - transform.position.y; // 设置最小透明度距离
+            maxAlphaDistance = Vector2.Distance(transform.position, lamp.transform.position); // 设置最大透明度距离
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -454,6 +495,10 @@ public class ShadowBehaviour : MonoBehaviour
             {
                 switchObject = null; // 清除引用
             }
+        }
+        if (other.gameObject.tag == "lamp")
+        {
+            lamp = null;
         }
         // if (other.gameObject.name == "Board")
         // {
