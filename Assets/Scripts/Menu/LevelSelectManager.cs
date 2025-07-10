@@ -97,7 +97,7 @@ public class LevelSelectManager : MonoBehaviour
                 SceneManager.LoadScene(sceneName);
                 return; // 如果成功加载，直接返回
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 Debug.LogWarning("无法加载场景: " + sceneName + "。尝试下一个...");
             }
