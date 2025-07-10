@@ -175,8 +175,8 @@ public class ShadowBehaviour : MonoBehaviour
     public bool isPaused = false; // 新增：暂停状态标志
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
-    [SerializeField] private float jumpForce = 13f;
-    [SerializeField] private float moveSpeed = 6f;
+    private float jumpForce = 13f;
+    private float moveSpeed = 6f;
     [SerializeField] private float shadowDuration = 10f;
     
     private bool isGrounded = false;
