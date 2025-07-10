@@ -22,7 +22,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isInputEnabled = true;
     private bool isInDoor = false; // 是否在门内
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
-    private bool win = false; // 是否赢得游戏
+    public bool win = false; // 是否赢得游戏
 
     public bool getState()
     {
@@ -366,10 +366,10 @@ public class PlayerBehaviour : MonoBehaviour
         GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
         moveInput = 0f; // 停止移动
         Debug.Log("Exit door opened");
-
+        win = true; // 设置赢得游戏的状态
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
-        win = true; // 设置赢得游戏的状态
+        
 
         // SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
