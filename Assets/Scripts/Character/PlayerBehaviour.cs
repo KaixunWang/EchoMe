@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class PlayerBehaviour : MonoBehaviour
 {
     public bool isGrounded = false;
+
+    public
     public bool isPaused = false; // 是否暂停
     [SerializeField]
     private Rigidbody2D rb;
@@ -23,7 +25,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isInDoor = false; // 是否在门内
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
     public bool win = false; // 是否赢得游戏
-
+    public bool lose= false; // 是否输掉游戏
     public bool getState()
     {
         return animator.GetBool("IsShadow");
@@ -402,10 +404,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         return win; // 返回是否赢得游戏的状态
     }
+    public bool IsLose()
+    {
+        return lose; // 返回是否输掉游戏的状态
+    }
     public void TakeDamage(string source)
     {
+        lose = true;
         Debug.Log("Player took damage from " + source);
-        Restart();
     }
     public void Restart()
     {
