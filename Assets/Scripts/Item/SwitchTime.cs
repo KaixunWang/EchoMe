@@ -34,15 +34,15 @@ public class SwitchTime : MonoBehaviour
     void Update()
     {
         isOn = switchObject.GetComponent<Cainos.PixelArtPlatformer_Dungeon.Switch>().IsOn; // Get the current state of the switch
-        if (isOn)
-        {
-            Debug.Log("Switch is ON, updating bar width.");
+        // if (isOn)
+        // {
+        //     Debug.Log("Switch is ON, updating bar width.");
             UpdateBarWidth();
-        }
-        else
+        // }
+        if(!isOn)
         {
             transform.position = initialPosition; // Reset the position of the bar to its initial position
-            Debug.Log("Switch is OFF, no update needed.");
+            // Debug.Log("Switch is OFF, no update needed.");
         }
     }
     private void UpdateBarWidth()

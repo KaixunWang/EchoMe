@@ -151,6 +151,10 @@ public class SceneManagerScript : MonoBehaviour
                     {
                         switchComponent.SetRemainingTime(currentState.switchRemainingTimes[i]);
                     }
+                    // else
+                    // {
+                    //     switchComponent.SetRemainingTime(0f); // Reset remaining time if switch is off
+                    // }
                 }
             }
             for (int i = 0; i < pressurePlates.Count && i < currentState.pressurePlateStates.Count; i++)
