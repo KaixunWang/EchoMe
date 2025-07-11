@@ -8873,7 +8873,7 @@ MonoBehaviour:
   - {fileID: 1745966247}
   - {fileID: 1470937295}
   pressurePlates: []
-  levelGoodTime: 20
+  levelGoodTime: 19
   doors:
   - {fileID: 363130573}
   boxes: []
