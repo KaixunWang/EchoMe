@@ -84,24 +84,26 @@ public class DescriptionScript : MonoBehaviour
     }
     private void updateButtons()
     {
-        nextButton.SetActive(currentIndex < items.Length - 1);
-        previousButton.SetActive(currentIndex > 0);
+        nextButtonComponent.interactable = currentIndex < items.Length - 1;
+        previousButtonComponent.interactable = currentIndex > 0;
+        // nextButton.SetActive(currentIndex < items.Length - 1);
+        // previousButton.SetActive(currentIndex > 0);
     }
     public void OnButtonPointerEnter(GameObject button)
     {
         button.GetComponentInChildren<TextMeshProUGUI>().color = Color.cyan;
-        Button buttonComponent = button.GetComponent<Button>();
-        ColorBlock colorBlock = buttonComponent.colors;
-        colorBlock.normalColor = Color.cyan;
-        buttonComponent.colors = colorBlock;
+        // Button buttonComponent = button.GetComponent<Button>();
+        // ColorBlock colorBlock = buttonComponent.colors;
+        // colorBlock.normalColor = Color.cyan;
+        // buttonComponent.colors = colorBlock;
     }
     public void OnButtonPointerExit(GameObject button)
     {
         button.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-        Button buttonComponent = button.GetComponent<Button>();
-        ColorBlock colorBlock = buttonComponent.colors;
-        colorBlock.normalColor = Color.white;
-        buttonComponent.colors = colorBlock;
+        // Button buttonComponent = button.GetComponent<Button>();
+        // ColorBlock colorBlock = buttonComponent.colors;
+        // colorBlock.normalColor = Color.white;
+        // buttonComponent.colors = colorBlock;
     }
     // private void restoreButtonColors()
     // {
