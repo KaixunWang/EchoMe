@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // 引入 TextMeshPro 命名空间
-
+using UnityEngine.SceneManagement;
 public class WinScript : MonoBehaviour
 {
     public GameObject oneStar;  // 1star
@@ -35,6 +35,11 @@ public class WinScript : MonoBehaviour
     }
     public void ShowWinPanel(string message)
     {
+        //如果当前scene是Level_0，则触发成就
+        if (SceneManager.GetActiveScene().name == "Level_0")
+        {
+            AchievementManager.Instance.UnlockAchievement("PassLevel0");
+        }
         winPanel.text = message; // 设置胜利面板的文本
     }
 }
