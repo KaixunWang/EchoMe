@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public GameObject achievementPanel;
     public void Start()
     {
         // 初始化菜单或其他设置
@@ -31,6 +32,12 @@ public class MenuManager : MonoBehaviour
     public void ShowAchievements()
     {
         Debug.Log("显示成就菜单");
-        SceneManager.LoadScene("AchievementsScene");
+        //将achievementpanel设置为active
+        achievementPanel.SetActive(true);
+    }
+
+    public void CloseAchievements()
+    {
+        achievementPanel.SetActive(false);
     }
 }
