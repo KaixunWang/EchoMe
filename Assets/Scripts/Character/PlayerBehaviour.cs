@@ -24,7 +24,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isInDoor = false; // 是否在门内
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
     public bool win = false; // 是否赢得游戏
-    public bool lose= false; // 是否输掉游戏
+    public bool lose = false; // 是否输掉游戏
     public bool getState()
     {
         return animator.GetBool("IsShadow");
@@ -52,7 +52,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (isPaused||lose||win) return; // 如果游戏暂停，直接返回
+        if (isPaused || lose || win) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态
         bool isShadow = animator.GetBool("IsShadow");
 
@@ -70,7 +70,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (isPaused||lose||win) return; // 如果游戏暂停，直接返回
+        if (isPaused || lose || win) return; // 如果游戏暂停，直接返回
         // 检查是否处于影子状态，如果是则禁用移动
         bool isShadow = animator.GetBool("IsShadow");
         isGrounded = CheckGrounded();
@@ -127,7 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
             switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
             if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
             {
-                switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
+                switchObject.targetPlatform.RemainingCount++; // 设置剩余前进路径点数量为1
             }
         }
 
@@ -376,7 +376,7 @@ public class PlayerBehaviour : MonoBehaviour
         win = true; // 设置赢得游戏的状态
         // 加载下一个场景，延迟一点让动画完成
         yield return new WaitForSeconds(1.3f); // 可选：等待门打开动画完成
-        
+
 
         // SceneManager.LoadScene("Menu"); // 替换为实际的场景名称
     }
@@ -411,7 +411,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public bool IsLose()
     {
-        
+
         return lose; // 返回是否输掉游戏的状态
     }
     public void TakeDamage(string source)
@@ -424,5 +424,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Debug.Log("Restarting scene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 重新加载当前场景
+    }
+    // 判断当前player是否为shadow模式
+    public bool IsShadow()
+    {
+        return animator != null && animator.GetBool("IsShadow");
     }
 }
