@@ -5,6 +5,7 @@
 public class BeaconBehaviour : MonoBehaviour
 {
     private List<TimeBasedInputEvent> memorizedInput = new List<TimeBasedInputEvent>();
+    public AudioSource callShadowSource; // 音频源，用于播放开关音效
     private float ShadowTime = 10f;
     private float EchoTime = 0f;
     private bool hasEcho = false;
@@ -21,6 +22,11 @@ public class BeaconBehaviour : MonoBehaviour
         {
             Debug.LogError("Failed to load Shadow prefab from Resources/Prefab/Shadow");
             return;
+        }
+
+        if (callShadowSource != null)
+        {
+            callShadowSource.Play(); // 播放开关音效
         }
 
         // 实例化 Shadow
@@ -64,6 +70,11 @@ public class BeaconBehaviour : MonoBehaviour
         {
             Debug.LogError("Failed to load Echo prefab from Resources/Prefab/Echo");
             return;
+        }
+
+        if (callShadowSource != null)
+        {
+            callShadowSource.Play(); // 播放开关音效
         }
         if (EchoTime <= 0f) return;
         // 实例化 Echo
