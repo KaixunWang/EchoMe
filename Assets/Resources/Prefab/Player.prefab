@@ -135,6 +135,8 @@ MonoBehaviour:
   Exit: {fileID: 0}
   win: 0
   lose: 0
+  AchievementMove: 0
+  AchievementJump: 0
   nearBeaconPosition: {x: 0, y: 0, z: 0}
   footstepAudioSource: {fileID: 1719479689374955573}
   jumpAudioSource: {fileID: 780673841140988737}
