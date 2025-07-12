@@ -45,11 +45,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             return;
         }
-        AchievementManager.Instance.UnlockAchievement("Beacon");
-        Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
         beaconBehaviour.SwitchShadow(nearBeaconPosition);
+        AchievementManager.Instance.UnlockAchievement("Beacon");
+        Debug.Log("Switching shadow");
     }
     void FixedUpdate()
     {
@@ -81,34 +81,38 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (!isShadow)
         {
+            bool AchievementMove = false;
+            bool AchievementJump = false;
             // 只有在非影子状态下才允许移动
             if (isInputEnabled && Input.GetKey(KeyCode.A))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(-3, 3, 1);
                 moveInput = -1f;
-                AchievementManager.Instance.UnlockAchievement("Move");
+                AchievementMove = true;
             }
             if (isInputEnabled && Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(3, 3, 1);
                 moveInput = 1f;
-                AchievementManager.Instance.UnlockAchievement("Move");
+                AchievementMove = true;
+
             }
             if (isInputEnabled && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", false);
                 moveInput = 0f;
             }
-
             // 只有在非影子状态下才允许跳跃
             if (isInputEnabled && Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
                 Debug.Log("Jump");
                 Jump();
-                AchievementManager.Instance.UnlockAchievement("PressW");
+                AchievementJump = true;
             }
+            if (AchievementMove) AchievementManager.Instance.UnlockAchievement("Move");
+            if (AchievementJump) AchievementManager.Instance.UnlockAchievement("Jump");
         }
         else
         {
@@ -239,6 +243,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
+            jumpForce = 14; // 重置跳跃力
             rb.gravityScale = 10; // 黏住
             Debug.Log("Player entered MovingPlatform");
         }
@@ -297,6 +302,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
+            jumpForce = 13; // 恢复跳跃力
             rb.gravityScale = 3.5f; // 恢复重力
             Debug.Log("Player exited MovingPlatform");
         }
