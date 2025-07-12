@@ -162,11 +162,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
             }
-            AudioSource audioSource = switchObject.GetComponent<AudioSource>();
-            if (audioSource != null)
-            {
-                audioSource.Play();
-            }
+
         }
 
         if (isInputEnabled && Input.GetKeyDown(KeyCode.R) && isNearBeacon && !isShadow && !beaconBehaviour.HasEcho())

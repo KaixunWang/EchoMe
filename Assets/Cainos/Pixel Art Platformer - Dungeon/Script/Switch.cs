@@ -21,6 +21,8 @@ namespace Cainos.PixelArtPlatformer_Dungeon
 
         [FoldoutGroup("Settings")] public float autoCloseDelay = 1.5f; // 自动关闭延迟时间
         private float remainingTime = 0f; // 保留的时间
+
+        public AudioSource switchAudioSource;
         private Animator Animator
         {
             get
@@ -40,6 +42,10 @@ namespace Cainos.PixelArtPlatformer_Dungeon
         public void TriggerSwitch()
         {
             IsOn = !IsOn; // 切换开关状态
+            if (switchAudioSource != null)
+            {
+                switchAudioSource.Play(); // 播放开关音效
+            }
             if (target != null)
             {
                 TriggerDoor(); // 触发门的状态切换
