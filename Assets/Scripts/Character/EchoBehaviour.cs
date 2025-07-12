@@ -164,7 +164,6 @@ public class EchoBehaviour : MonoBehaviour
 
     private bool isNearSwitch = false;
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
-    private BoxesBehavior boxes = null;
     private BeaconBehaviour beaconBehaviour;
     void Start()
     {
@@ -353,28 +352,6 @@ public class EchoBehaviour : MonoBehaviour
     {
         beaconBehaviour.SetHasEcho(false);
         Destroy(gameObject);
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-       
-        if (collision.gameObject.name == "Boxes")
-        {
-            boxes = collision.gameObject.GetComponent<BoxesBehavior>();
-            Debug.Log("Collided with Boxes");
-            boxes.SetSpeed(moveSpeed); // 设置盒子的移动速度
-            if (collision.contacts[0].normal.x > 0)
-            {
-                Debug.Log("Collision on right side, pushing left");
-                // 如果碰撞发生在右侧，向左推动
-                boxes.PushLeft();
-            }
-            else if (collision.contacts[0].normal.x < 0)
-            {
-                Debug.Log("Collision on left side, pushing right");
-                // 如果碰撞发生在左侧，向右推动
-                boxes.PushRight();
-            }
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -19,7 +19,6 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isNearBeacon = false;
     private bool isNearSwitch = false;
     private Cainos.PixelArtPlatformer_Dungeon.Switch switchObject = null;
-    private BoxesBehavior boxes = null;
     private bool isInputEnabled = true;
     private bool isInDoor = false; // 是否在门内
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
@@ -31,6 +30,10 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public Vector3 nearBeaconPosition;
     private BeaconBehaviour beaconBehaviour;
+
+    public AudioSource footstepAudioSource;
+    public AudioSource jumpAudioSource;
+    public AudioSource deadAudioSource;
 
     void Start()
     {
@@ -78,6 +81,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             animator.SetBool("IsJumping", false);
         }
+        if (!isGrounded)
+        {
+            if (footstepAudioSource != null)
+            {
+                footstepAudioSource.Stop();
+            }
+        }
         if (!isShadow)
         {
             // 只有在非影子状态下才允许移动
@@ -86,12 +96,20 @@ public class PlayerBehaviour : MonoBehaviour
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(-3, 3, 1);
                 moveInput = -1f;
+                if (footstepAudioSource != null && !footstepAudioSource.isPlaying && isGrounded)
+                {
+                    footstepAudioSource.Play();
+                }
             }
             if (isInputEnabled && Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(3, 3, 1);
                 moveInput = 1f;
+                if (footstepAudioSource != null && !footstepAudioSource.isPlaying && isGrounded)
+                {
+                    footstepAudioSource.Play();
+                }
             }
             if (isInputEnabled && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
@@ -104,6 +122,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 Debug.Log("Jump");
                 Jump();
+                if (jumpAudioSource != null)
+                {
+                    jumpAudioSource.Play();
+                }
             }
         }
         else
@@ -124,10 +146,16 @@ public class PlayerBehaviour : MonoBehaviour
         if (isInputEnabled && Input.GetKeyDown(KeyCode.E) && isNearSwitch && switchObject != null)
         {
             Debug.Log("E pressed near switch");
-            switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
+            switchObject.TriggerSwitch(); // 触发开关
+            //switchObject.IsOn = !switchObject.IsOn; // 切换开关状态
             if (switchObject.targetPlatform != null && switchObject.targetPlatform.tag == "MovingPlatform")
             {
                 switchObject.targetPlatform.RemainingCount ++; // 设置剩余前进路径点数量为1
+            }
+            AudioSource audioSource = switchObject.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Play();
             }
         }
 
@@ -206,30 +234,6 @@ public class PlayerBehaviour : MonoBehaviour
         isInputEnabled = true;
         Debug.Log("Input re-enabled after delay");
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        if (collision.gameObject.name == "Boxes")
-        {
-            boxes = collision.gameObject.GetComponent<BoxesBehavior>();
-            Debug.Log("Collided with Boxes");
-            boxes.SetSpeed(moveSpeed); // 设置盒子的移动速度
-            if (collision.contacts[0].normal.x > 0)
-            {
-                Debug.Log("Collision on right side, pushing left");
-                // 如果碰撞发生在右侧，向左推动
-                boxes.PushLeft();
-            }
-            else if (collision.contacts[0].normal.x < 0)
-            {
-                Debug.Log("Collision on left side, pushing right");
-                // 如果碰撞发生在左侧，向右推动
-                boxes.PushRight();
-            }
-        }
-    }
-
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -418,6 +422,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Time.timeScale = 0; // 停止时间Time.timeScale = 0; // 停止时间
         lose = true;
+        if (deadAudioSource != null)
+        {
+            deadAudioSource.Play(); // 播放死亡音效
+        }
         Debug.Log("Player took damage from " + source);
     }
     public void Restart()

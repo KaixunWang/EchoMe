@@ -37,42 +37,34 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             Animator.SetBool("IsOn", isOn);
             IsOn = isOn;
         }
-
+        public void TriggerSwitch()
+        {
+            IsOn = !IsOn; // 切换开关状态
+            if (target != null)
+            {
+                TriggerDoor(); // 触发门的状态切换
+                Debug.Log("Switch: " + (IsOn ? "Turn On" : "Turn Off"));
+            }
+            else
+            {
+                Debug.LogWarning("Switch: No target assigned.");
+            }
+        }
         public void TriggerDoor()
         {
             if (target != null && target.tag == "door")
             {
-                if (IsOn)
-                {
-                    Debug.Log("Switch: Open the door");
-                    target.SetDoor(true);
-                }
-                else
-                {
-                    Debug.Log("Switch: Close the door");
-                    target.SetDoor(false);
-                }
+                target.SetDoor(IsOn); 
             }
             if (target != null && target.tag == "gate")
             {
-                if (IsOn)
-                {
-                    Debug.Log("Switch: Open the gate");
-                    target.SetDoor(true); // 确保门关闭状态
-                    target.SetGate(true);
-                }
-                else
-                {
-                    Debug.Log("Switch: Close the gate");
-                    target.SetDoor(false); // 确保门关闭状态
-                    target.SetGate(false);
-                }
+                target.SetGate(IsOn);
+                target.SetDoor(IsOn);
             }
         }
         void Update()
         {
             Animator.SetBool("IsOn", isOn);
-            TriggerDoor();
         }
 
         // 自动关闭协程
@@ -89,6 +81,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
             // remainingTime = autoCloseDelay;
             IsOn = false;
             autoCloseCoroutine = null;
+            TriggerDoor();
         }
 
         [FoldoutGroup("Runtime"), ShowInInspector]
@@ -108,7 +101,7 @@ namespace Cainos.PixelArtPlatformer_Dungeon
                 }
 #endif
 
-                if (target) target.IsOpened = isOn;
+                if (target && target.Control) target.IsOpened = isOn;
 
                 if (Application.isPlaying)
                 {
