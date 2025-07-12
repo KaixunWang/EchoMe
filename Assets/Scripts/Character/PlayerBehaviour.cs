@@ -25,6 +25,8 @@ public class PlayerBehaviour : MonoBehaviour
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
     public bool win = false; // 是否赢得游戏
     public bool lose= false; // 是否输掉游戏
+    public bool AchievementMove = false;
+    public bool AchievementJump = false;
     public bool getState()
     {
         return animator.GetBool("IsShadow");
@@ -81,8 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (!isShadow)
         {
-            bool AchievementMove = false;
-            bool AchievementJump = false;
+            
             // 只有在非影子状态下才允许移动
             if (isInputEnabled && Input.GetKey(KeyCode.A))
             {
@@ -108,11 +109,12 @@ public class PlayerBehaviour : MonoBehaviour
             if (isInputEnabled && Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
                 Debug.Log("Jump");
+                
                 Jump();
                 AchievementJump = true;
             }
             if (AchievementMove) AchievementManager.Instance.UnlockAchievement("Move");
-            if (AchievementJump) AchievementManager.Instance.UnlockAchievement("Jump");
+            if(AchievementJump) AchievementManager.Instance.UnlockAchievement("PressW");
         }
         else
         {

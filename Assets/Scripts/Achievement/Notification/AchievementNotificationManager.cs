@@ -9,7 +9,7 @@ public class AchievementNotificationManager : MonoBehaviour
     public AchievementNotification notificationPrefab;
     public Canvas notificationCanvas; // 专用的通知Canvas，跨场景保持
     public int maxSimultaneousNotifications = 3;
-    public float verticalSpacing = 120f;
+    public float verticalSpacing = 300f;
     
     private Queue<Achievement> notificationQueue = new Queue<Achievement>();
     private List<AchievementNotification> activeNotifications = new List<AchievementNotification>();
