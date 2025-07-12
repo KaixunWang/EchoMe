@@ -434,14 +434,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Time.timeScale = 0; // 停止时间Time.timeScale = 0; // 停止时间
         lose = true;
-<<<<<<< HEAD
         if (deadAudioSource != null)
         {
             deadAudioSource.Play(); // 播放死亡音效
         }
-=======
         AchievementManager.Instance.UnlockAchievement("Die");
->>>>>>> 052e54db9ae40aa1b936cf86b03e8234effaca23
         Debug.Log("Player took damage from " + source);
     }
     public void Restart()
