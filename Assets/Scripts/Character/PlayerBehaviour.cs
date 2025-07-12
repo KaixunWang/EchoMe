@@ -24,6 +24,8 @@ public class PlayerBehaviour : MonoBehaviour
     public Cainos.PixelArtPlatformer_Dungeon.Door Exit = null;
     public bool win = false; // 是否赢得游戏
     public bool lose= false; // 是否输掉游戏
+    public bool AchievementMove = false;
+    public bool AchievementJump = false;
     public bool getState()
     {
         return animator.GetBool("IsShadow");
@@ -48,10 +50,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
         beaconBehaviour.SwitchShadow(nearBeaconPosition);
+        AchievementManager.Instance.UnlockAchievement("Beacon");
+        Debug.Log("Switching shadow");
     }
     void FixedUpdate()
     {
@@ -90,6 +93,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (!isShadow)
         {
+            
             // 只有在非影子状态下才允许移动
             if (isInputEnabled && Input.GetKey(KeyCode.A))
             {
@@ -100,6 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     footstepAudioSource.Play();
                 }
+                AchievementMove = true;
             }
             if (isInputEnabled && Input.GetKey(KeyCode.D))
             {
@@ -110,23 +115,28 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     footstepAudioSource.Play();
                 }
+                AchievementMove = true;
+
             }
             if (isInputEnabled && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", false);
                 moveInput = 0f;
             }
-
             // 只有在非影子状态下才允许跳跃
             if (isInputEnabled && Input.GetKeyDown(KeyCode.W) && isGrounded)
             {
                 Debug.Log("Jump");
+                
                 Jump();
                 if (jumpAudioSource != null)
                 {
                     jumpAudioSource.Play();
                 }
+                AchievementJump = true;
             }
+            if (AchievementMove) AchievementManager.Instance.UnlockAchievement("Move");
+            if(AchievementJump) AchievementManager.Instance.UnlockAchievement("PressW");
         }
         else
         {
@@ -239,6 +249,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
+            jumpForce = 14; // 重置跳跃力
             rb.gravityScale = 10; // 黏住
             Debug.Log("Player entered MovingPlatform");
         }
@@ -297,6 +308,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
+            jumpForce = 13; // 恢复跳跃力
             rb.gravityScale = 3.5f; // 恢复重力
             Debug.Log("Player exited MovingPlatform");
         }
@@ -422,10 +434,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Time.timeScale = 0; // 停止时间Time.timeScale = 0; // 停止时间
         lose = true;
+<<<<<<< HEAD
         if (deadAudioSource != null)
         {
             deadAudioSource.Play(); // 播放死亡音效
         }
+=======
+        AchievementManager.Instance.UnlockAchievement("Die");
+>>>>>>> 052e54db9ae40aa1b936cf86b03e8234effaca23
         Debug.Log("Player took damage from " + source);
     }
     public void Restart()

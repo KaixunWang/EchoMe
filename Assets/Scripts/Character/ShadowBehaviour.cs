@@ -429,7 +429,7 @@ public class ShadowBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            transform.SetParent(other.transform); // 设置玩家为移动平台的子物体
+            jumpForce = 14f;
             rb.gravityScale = 0f; // 禁用重力
             Debug.Log("Player entered MovingPlatform");
         }
@@ -460,7 +460,7 @@ public class ShadowBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            transform.SetParent(null); // 设置玩家为移动平台的子物体
+            jumpForce = 13f; // 恢复跳跃力
             rb.gravityScale = 3.5f; // 恢复重力
             Debug.Log("Player exited MovingPlatform");
         }
