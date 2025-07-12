@@ -1027,9 +1027,58 @@ MonoBehaviour:
   - id: PassLevel0
     name: Nihao
     description: Player passes level 0.
-    category: General
+    category: Progress
+    isUnlocked: 0
+    icon: {fileID: 806547383, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 1
+  - id: PassLevel1
+    name: Echo Me
+    description: Player passes level 1.
+    category: Progress
     isUnlocked: 0
     icon: {fileID: -1743310579, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 2
+  - id: PassLevel2
+    name: Go Go Goo!
+    description: Player passes level 2.
+    category: Progress
+    isUnlocked: 0
+    icon: {fileID: 1717088320, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 3
+  - id: PassLevel3
+    name: Visage
+    description: Player passes level 3.
+    category: Progress
+    isUnlocked: 0
+    icon: {fileID: -1531307364, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 3
+  - id: PassLevel4
+    name: Kickass Combat
+    description: Player passes level 4.
+    category: Progress
+    isUnlocked: 0
+    icon: {fileID: 1281055659, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 3
+  - id: PressW
+    name: You Know jump
+    description: Player learned jump.
+    category: Control
+    isUnlocked: 0
+    icon: {fileID: -824989687, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 1
+  - id: Move
+    name: You Know Move
+    description: Player learned move.
+    category: Control
+    isUnlocked: 0
+    icon: {fileID: 1981722482, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
+    scoreReward: 1
+  - id: Beacon
+    name: Learned Beacon
+    description: Player learned interact Beacon.
+    category: Control
+    isUnlocked: 0
+    icon: {fileID: 1224180941, guid: 0de512ca4a4475a46ad6200659a6e6c9, type: 3}
     scoreReward: 1
 --- !u!4 &326421657
 Transform:

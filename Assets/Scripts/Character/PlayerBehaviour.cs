@@ -45,6 +45,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             return;
         }
+        AchievementManager.Instance.UnlockAchievement("Beacon");
         Debug.Log("Switching shadow");
         animator.SetBool("IsShadow", true);
         animator.SetBool("IsWalking", false);
@@ -86,12 +87,14 @@ public class PlayerBehaviour : MonoBehaviour
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(-3, 3, 1);
                 moveInput = -1f;
+                AchievementManager.Instance.UnlockAchievement("Move");
             }
             if (isInputEnabled && Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("IsWalking", true);
                 transform.localScale = new Vector3(3, 3, 1);
                 moveInput = 1f;
+                AchievementManager.Instance.UnlockAchievement("Move");
             }
             if (isInputEnabled && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
@@ -104,6 +107,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 Debug.Log("Jump");
                 Jump();
+                AchievementManager.Instance.UnlockAchievement("PressW");
             }
         }
         else
@@ -418,6 +422,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Time.timeScale = 0; // 停止时间Time.timeScale = 0; // 停止时间
         lose = true;
+        AchievementManager.Instance.UnlockAchievement("Die");
         Debug.Log("Player took damage from " + source);
     }
     public void Restart()

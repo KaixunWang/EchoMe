@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class SceneManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Debug.Assert(player != null, "Player GameObject is not assigned in the SceneManagerScript.");
         Debug.Assert(clock != null, "Clock GameObject is not assigned in the SceneManagerScript.");
         Debug.Assert(win != null, "Win GameObject is not assigned in the SceneManagerScript.");
@@ -60,6 +62,11 @@ public class SceneManagerScript : MonoBehaviour
             if (clock.GetComponent<TimerBehavior>().GetElapsedTime() <= levelGoodTime)
             {
                 score++;
+                //如果当前scene是Level_4，则触发成就PassLevel4
+                if (SceneManager.GetActiveScene().name == "Level_4" && clock.GetComponent<TimerBehavior>().GetElapsedTime() <= 20)
+                {
+                    AchievementManager.Instance.UnlockAchievement("PassLevel4_Under20");
+                }
                 message += "Time: " + clock.GetComponent<TimerBehavior>().GetElapsedTime() + "/" + levelGoodTime + "s\n";
             }
             else
