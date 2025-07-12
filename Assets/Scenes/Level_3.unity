@@ -662,12 +662,20 @@ PrefabInstance:
       value: Single Box (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7563735604660060800, guid: e623316cbef78534a9cb4bb490bd8d84, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563735604660060800, guid: e623316cbef78534a9cb4bb490bd8d84, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563735604660060800, guid: e623316cbef78534a9cb4bb490bd8d84, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.74
       objectReference: {fileID: 0}
     - target: {fileID: 7563735604660060800, guid: e623316cbef78534a9cb4bb490bd8d84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.4
+      value: -4.34
       objectReference: {fileID: 0}
     - target: {fileID: 7563735604660060800, guid: e623316cbef78534a9cb4bb490bd8d84, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7053,7 +7061,7 @@ PrefabInstance:
       objectReference: {fileID: 749695954}
     - target: {fileID: 4750236094321503291, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: level_1
+      value: level_4
       objectReference: {fileID: 0}
     - target: {fileID: 8735341808391543837, guid: a8c889116495da54397835781b005aba, type: 3}
       propertyPath: m_Name
